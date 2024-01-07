@@ -38,6 +38,7 @@
 <script setup>
 import { reactive } from "vue"
 
+import "./styles.css"
 const state = reactive({ count: 0, action: null })
 
 function increment() {
