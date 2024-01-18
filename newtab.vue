@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 import "./styles.css"
 
 
@@ -6,7 +7,9 @@ import "./styles.css"
 
 <template>
   <div class="container">
-    <h2 class="text-zinc-100 text-4xl text-center">
+    <button class="btn btn-blue">Hello!</button>
+
+    <h2 class="text-zinc-100 text-4xl text-center font-extrabold">
       be...mindful
     </h2>
   </div>
