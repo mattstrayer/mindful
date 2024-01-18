@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import { Button } from "./components/ui/button"
 
 import "./index.css"
 
@@ -9,7 +8,8 @@ import "./index.css"
 
 <template>
   <div class="container">
-    <Button >Hello!</Button>
+    <button class="btn" >Hello!</Button>
+
 
     <h2 class="text-zinc-100 text-4xl text-center font-extrabold">
       be...mindful
