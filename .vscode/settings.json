@@ -1,4 +1,18 @@
 {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit"
+    },
+    "eslint.codeActionsOnSave.mode": "all",
+    "eslint.validate": [
+        "javascript",
+        "vue",
+        "typescript",
+    ],
+    "editor.tabSize": 2,
+    "[vue]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+    },
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#7230da",
         "activityBar.background": "#7230da",
