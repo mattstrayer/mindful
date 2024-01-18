@@ -1,13 +1,15 @@
 <script setup lang="ts">
 
-import "./styles.css"
+import { Button } from "./components/ui/button"
+
+import "./index.css"
 
 
 </script>
 
 <template>
   <div class="container">
-    <button class="btn btn-blue">Hello!</button>
+    <Button >Hello!</Button>
 
     <h2 class="text-zinc-100 text-4xl text-center font-extrabold">
       be...mindful
