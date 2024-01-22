@@ -2,13 +2,12 @@
 type UUID = string
 
 
+
 export class Task {
-  id: UUID
-  name: string
-  description: string
-  completed: boolean
-  createdAt: Date
-  updatedAt: Date
+
+  constructor(public id: UUID, public name: string, public description: string, public completed: boolean, public createdAt: Date, public updatedAt: Date) { }
+
+
 }
 
 

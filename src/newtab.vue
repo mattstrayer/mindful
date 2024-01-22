@@ -1,39 +1,56 @@
 <script setup lang="ts">
 import "./index.css"
+
+import TaskListItem from "./components/taskListItem.vue"
+
+const state = {
+  tasks: [
+    {
+      id: 1,
+      name: "I really need to do this task!",
+      completed: false
+    },
+    {
+      id: 2,
+      name: "this one is a little less pressing, so ofc i finished it first",
+      completed: true
+    }
+  ]
+}
 </script>
 
 <template>
-  <div class="container">
-    <div class="join">
-      <input
-        type="text"
-        placeholder="Type here"
-        class="input input-bordered join-item w-full max-w-xs" />
-      <button class="btn btn-primary join-item">Hello!</button>
-    </div>
-    <div class="form-control">
-      <label class="label cursor-pointer">
-        <input type="checkbox" checked="checked" class="checkbox" />
-        <span class="label-text">Remember me</span>
-      </label>
-    </div>
+  <h1 class="text-zinc-100 text-4xl text-center font-extrabold mb-4">
+    <span>be</span>
+    <span>mindful</span>
+  </h1>
 
-    <h2 class="text-zinc-100 text-4xl text-center font-extrabold">
-      be...mindful
-    </h2>
+  <div class="container">
+    <form class="mb-4">
+      <div class="form-control">
+        <label>Task</label>
+        <div class="join">
+          <input
+            type="text"
+            placeholder="Type here"
+            class="input input-bordered join-item w-full max-w-xs" />
+          <button class="btn btn-primary join-item">add</button>
+        </div>
+      </div>
+    </form>
+    <TaskListItem :task="task" v-for="task in state.tasks" />
   </div>
 </template>
 
 <style>
 #__plasmo {
-  display: flex;
   justify-content: center;
   width: 100%;
   height: 100%;
 }
 
 .container {
-  width: 100%;
+  width: 74%;
   height: 100%;
 }
 </style>
