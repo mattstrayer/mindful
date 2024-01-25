@@ -1,44 +1,51 @@
 <script setup lang="ts">
 import "./index.css"
 
-import TaskListItem from "./components/taskListItem.vue"
+import { createPinia } from "pinia"
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate"
+import { getCurrentInstance } from "vue"
 
-const state = {
-  tasks: [
-    {
-      id: 1,
-      name: "I really need to do this task!",
-      completed: false
-    },
-    {
-      id: 2,
-      name: "this one is a little less pressing, so ofc i finished it first",
-      completed: true
-    }
-  ]
-}
+import AddTask from "./components/addTask.vue"
+import RemindersSection from "./components/remindersSection.vue"
+import TaskListItem from "./components/taskListItem.vue"
+import TasksContainer from "./components/tasksContainer.vue"
+import { useStore } from "./store"
+
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+
+const instance = getCurrentInstance()
+
+instance.appContext.app.use(pinia)
+
+const store = useStore()
+
+// TODO:
+// add watcher to store.
+// when it changes push an event to the background service worker to persist
 </script>
 
 <template>
-  <h1 class="text-zinc-100 text-4xl text-center font-extrabold mb-4">
-    <span>be</span>
-    <span>mindful</span>
-  </h1>
-
-  <div class="container">
-    <form class="mb-4">
-      <div class="form-control">
-        <label>Task</label>
-        <div class="join">
-          <input
-            type="text"
-            placeholder="Type here"
-            class="input input-bordered join-item w-full max-w-xs" />
-          <button class="btn btn-primary join-item">add</button>
-        </div>
+  <div class="container flex flex-col justify-center max-w-[600px] mx-auto">
+    <h1
+      class="text-zinc-100 text-6xl text-center font-extrabold mb-4 line leading-snug">
+      <div
+        class="animate-pulse animate-infinite animate-duration-[6000ms] animate-delay-1000 animate-ease-in-out">
+        be
       </div>
-    </form>
-    <TaskListItem :task="task" v-for="task in state.tasks" />
+      <div
+        class="animate-pulse animate-infinite animate-duration-[6000ms] animate-delay-1000 animate-ease-in-out">
+        mindful
+      </div>
+    </h1>
+
+    <RemindersSection class="flex-1" :reminders="store.reminders" />
+
+    <TasksContainer>
+      <AddTask />
+
+      <TaskListItem :task="task" v-for="task in store.tasks" class="flex-1" />
+    </TasksContainer>
   </div>
 </template>
 
@@ -50,7 +57,6 @@ const state = {
 }
 
 .container {
-  width: 74%;
   height: 100%;
 }
 </style>

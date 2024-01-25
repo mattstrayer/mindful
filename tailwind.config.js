@@ -8,6 +8,6 @@ module.exports = {
     './src/**/*.{ts,tsx,vue}',
 	],
 
-  plugins: [require("@tailwindcss/typography"), require("daisyui")],
+  plugins: [require("@tailwindcss/typography"),     require('tailwindcss-animated'),  require("daisyui")],
 
 }
