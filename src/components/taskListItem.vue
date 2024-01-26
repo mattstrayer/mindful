@@ -22,7 +22,7 @@ const store = useStore()
         :checked="props.task.completed"
         class="checkbox checkbox-lg"
         :class="{ 'checkbox-primary': props.task.completed }"
-        @change="store.completeTask(props.task.id)" />
+        @change="store.toggleTask(props.task.id)" />
     </div>
   </div>
 </template>

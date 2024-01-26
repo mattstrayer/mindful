@@ -1,13 +1,17 @@
-
+import { v4 as uuidv4 } from 'uuid'
 type UUID = string
 
 
 
 export class Task {
 
-  constructor(public id: UUID, public name: string, public description: string, public completed: boolean, public createdAt: Date, public updatedAt: Date) { }
+  private id = uuidv4() as UUID
 
+  public completed = false
+  public createdAt = new Date()
+  public completedAt = null
 
+  constructor(public name: string) {}
 }
 
 

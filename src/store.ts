@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { Task } from '~models'
 
 // You can name the return value of `defineStore()` anything you want,
 // but it's best to use the name of the store and surround it with `use`
@@ -11,16 +12,10 @@ export const useStore = defineStore('mindful', {
   persist: true,
   state: () => {
     return {
-      tasks: [{
-        id: 1,
-        name: "Take Landon Out",
-        completed: false
-      },
-      {
-        id: 2,
-        name: "Meditate",
-        completed: true
-      }] ,
+      tasks: [
+        new Task('Take Landon Out'),
+        new Task('Meditate'),
+      ] ,
       reminders: ['positive', 'generous', 'accountable']
     }
   },
@@ -32,10 +27,11 @@ export const useStore = defineStore('mindful', {
       this.tasks.push(task)
 
     },
-    completeTask(id: number) {
+    toggleTask(id: string) {
       this.tasks = this.tasks.map((task) => {
         if (task.id === id) {
           task.completed = !task.completed
+          task.completedAt = task.completed ? new Date() : null
         }
         return task
       })
