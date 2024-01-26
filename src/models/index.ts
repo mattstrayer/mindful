@@ -1,9 +1,8 @@
 import { v4 as uuidv4 } from "uuid"
-import { computed } from "vue"
+
 import { useStore } from "~store"
 
 type UUID = string
-
 
 type TaskDefinition = {
   id?: UUID
@@ -13,9 +12,7 @@ type TaskDefinition = {
   completedAt?: Date | string | null
 }
 
-
 class Base {
-
   public static get store() {
     return useStore()
   }
@@ -25,10 +22,30 @@ class Base {
   }
 }
 
+
+type IntentionDefinition = {
+  id?: UUID
+  name: string
+
+}
+
+export class Intention extends Base {
+  protected _id: UUID
+  public name: string
+
+  constructor(payload : IntentionDefinition) {
+    super()
+    this.name = payload.name
+    this._id = payload.id || uuidv4()
+  }
+
+
+  public static get all() {
+    return this.store.intentions
+  }
+
+}
 export class Task extends Base {
-
-
-
   protected _id: UUID
 
   public name: string
@@ -41,7 +58,7 @@ export class Task extends Base {
 
     this._id = payload.id || uuidv4()
     this.name = payload.name
-    this.completed = payload.completed
+    this.completed = payload.completed || this.completed
     this.createdAt = payload.createdAt || new Date()
     this.completedAt = payload.completedAt
   }
@@ -72,23 +89,20 @@ export class Task extends Base {
     })
   }
 
-  public static get all()  {
+  public static get all() {
     return this.store.tasks
   }
 
   public static allSorted() {
-      // return sorted copy of tasks, so we don't mutate the original
-      return [...this.all].sort((a, b) => {
-        if (a.completed && !b.completed) {
-          return 1
-        } else if (!a.completed && b.completed) {
-          return -1
-        } else {
-          return 0
-        }
-      })
-
-
+    // return sorted copy of tasks, so we don't mutate the original
+    return [...this.all].sort((a, b) => {
+      if (a.completed && !b.completed) {
+        return 1
+      } else if (!a.completed && b.completed) {
+        return -1
+      } else {
+        return 0
+      }
+    })
+  }
 }
-}
-

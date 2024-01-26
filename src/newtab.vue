@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import "./index.css"
 
+import { MotionPlugin } from "@vueuse/motion"
 import { createPinia } from "pinia"
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate"
-import { computed, getCurrentInstance, onMounted } from "vue"
+import { computed, getCurrentInstance } from "vue"
 
-import { Task } from "~models"
+import { Intention, Task } from "~models"
 
 import AddTask from "./components/addTask.vue"
 import IntentionsSection from "./components/intentionsSection.vue"
@@ -18,14 +19,11 @@ pinia.use(piniaPluginPersistedstate)
 const instance = getCurrentInstance()
 
 instance.appContext.app.use(pinia)
+instance.appContext.app.use(MotionPlugin)
 
 const allSorted = computed(() => {
   return Task.allSorted()
 })
-
-// TODO:
-// add watcher to store.
-// when it changes push an event to the background service worker to persist
 </script>
 
 <template>
@@ -36,6 +34,7 @@ const allSorted = computed(() => {
         class="animate-pulse animate-infinite animate-duration-[6000ms] animate-delay-1000 animate-ease-in-out">
         be
       </div>
+      <!-- TODO: use vue motion here  https://github.com/vueuse/motion -->
       <!-- this div should actually take in the 3 reminders and should be animated -->
       <!-- be: mindful as the default, and then let the user add in the other x amount of reminders -->
       <div
@@ -44,7 +43,7 @@ const allSorted = computed(() => {
       </div>
     </h1>
 
-    <!-- <IntentionsSection class="flex-1" :intentions="store.intentions" /> -->
+    <IntentionsSection class="flex-1" :intentions="Intention.all" />
 
     <TasksContainer>
       <h1 class="text-3xl text-zinc-100 font-extrabold flex-1 text-center mb-8">

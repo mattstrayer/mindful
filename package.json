@@ -16,9 +16,11 @@
   },
   "dependencies": {
     "@types/webextension-polyfill": "0.10.7",
+    "@vueuse/motion": "^2.0.0",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "plasmo": "0.84.1",
+    "superjson": "^2.2.1",
     "tailwindcss-animated": "^1.0.1",
     "uuid": "^9.0.1",
     "vue": "3.4.15"

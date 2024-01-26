@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import type { Intention } from "~models"
+
 export interface Props {
-  intentions?: Array<string>
+  intentions?: Array<Intention>
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  intentions: () => []
+  intentions: () => [] as Array<Intention>
 })
 </script>
 

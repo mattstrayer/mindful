@@ -45,6 +45,7 @@ module.exports = {
         registeredComponentsOnly: false,
         ignores: []
       }
-    ]
+    ],
+    "vue/multi-word-component-names": "off"
   }
 }
