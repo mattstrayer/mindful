@@ -3,9 +3,10 @@
     <input
       type="text"
       placeholder="Type here"
-      class="input input-bordered join-item w-full max-w-xs"
-      v-model="input" />
-    <button class="btn btn-primary join-item" @click="didPressAdd">add</button>
+      class="input input-bordered join-item w-full"
+      v-model="input"
+      @keyup.enter="didAddTask" />
+    <button class="btn btn-primary join-item" @click="didAddTask">add</button>
   </div>
 </template>
 
@@ -18,7 +19,8 @@ const input = ref("")
 
 const store = useStore()
 
-function didPressAdd() {
+function didAddTask() {
+  if (!input.value) return
   store.addTask(input.value)
 
   input.value = ""

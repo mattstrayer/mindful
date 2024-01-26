@@ -31,6 +31,15 @@ export const useStore = defineStore('mindful', {
 
       this.tasks.push(task)
 
-    }
+    },
+    completeTask(id: number) {
+      this.tasks = this.tasks.map((task) => {
+        if (task.id === id) {
+          task.completed = !task.completed
+        }
+        return task
+      })
+    },
+
   }
 })

@@ -3,7 +3,7 @@ import "./index.css"
 
 import { createPinia } from "pinia"
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate"
-import { getCurrentInstance } from "vue"
+import { computed, getCurrentInstance } from "vue"
 
 import AddTask from "./components/addTask.vue"
 import RemindersSection from "./components/remindersSection.vue"
@@ -20,6 +20,18 @@ instance.appContext.app.use(pinia)
 
 const store = useStore()
 
+const sortedTasks = computed(() => {
+  return store.tasks.sort((a, b) => {
+    if (a.completed && !b.completed) {
+      return 1
+    } else if (!a.completed && b.completed) {
+      return -1
+    } else {
+      return 0
+    }
+  })
+})
+
 // TODO:
 // add watcher to store.
 // when it changes push an event to the background service worker to persist
@@ -33,6 +45,8 @@ const store = useStore()
         class="animate-pulse animate-infinite animate-duration-[6000ms] animate-delay-1000 animate-ease-in-out">
         be
       </div>
+      <!-- this div should actually take in the 3 reminders and should be animated -->
+      <!-- be: mindful as the default, and then let the user add in the other x amount of reminders -->
       <div
         class="animate-pulse animate-infinite animate-duration-[6000ms] animate-delay-1000 animate-ease-in-out">
         mindful
@@ -42,9 +56,19 @@ const store = useStore()
     <RemindersSection class="flex-1" :reminders="store.reminders" />
 
     <TasksContainer>
-      <AddTask />
+      <h1 class="text-3xl text-zinc-100 font-extrabold flex-1 text-center mb-8">
+        Today
+      </h1>
 
-      <TaskListItem :task="task" v-for="task in store.tasks" class="flex-1" />
+      <AddTask class="mb-12" />
+
+      <TransitionGroup name="list" tag="div">
+        <TaskListItem
+          :task="task"
+          v-for="task in sortedTasks"
+          class="flex-1"
+          :key="task.id" />
+      </TransitionGroup>
     </TasksContainer>
   </div>
 </template>

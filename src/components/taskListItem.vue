@@ -1,24 +1,28 @@
 <script setup lang="ts">
 import { Task } from "../models"
+import { useStore } from "../store"
 
 const id = Math.random().toString(36).substring(2, 15)
 
 const props = defineProps({
   task: Task
 })
+
+const store = useStore()
 </script>
 
 <template>
-  <div class="form-control">
-    <div class="join">
-      <div class="flex input input-bordered join-item leading-[3rem]">
-        <span class="inline-block"> {{ props.task.name }}</span>
-      </div>
-
+  <div class="flex justify-between items-center flex-row">
+    <div class="flex flex-col input input-bordered leading-[3rem]">
+      <span class="inline-block"> {{ props.task.name }}</span>
+    </div>
+    <div class="flex flex-col">
       <input
         type="checkbox"
         :checked="props.task.completed"
-        class="btn checkbox join-item" />
+        class="checkbox checkbox-lg"
+        :class="{ 'checkbox-primary': props.task.completed }"
+        @change="store.completeTask(props.task.id)" />
     </div>
   </div>
 </template>
