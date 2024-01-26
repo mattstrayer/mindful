@@ -21,7 +21,8 @@ instance.appContext.app.use(pinia)
 const store = useStore()
 
 const sortedTasks = computed(() => {
-  return store.tasks.sort((a, b) => {
+  // return sorted copy of tasks, so we don't mutate the original
+  return [...store.tasks].sort((a, b) => {
     if (a.completed && !b.completed) {
       return 1
     } else if (!a.completed && b.completed) {
