@@ -2,7 +2,7 @@
   <div class="join">
     <input
       type="text"
-      placeholder="Type here"
+      placeholder="I want to... (enter to add)"
       class="input input-bordered join-item w-full"
       v-model="input"
       @keyup.enter="didAddTask" />

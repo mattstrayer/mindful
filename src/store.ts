@@ -13,12 +13,12 @@ export const useStore = defineStore('mindful', {
     return {
       tasks: [{
         id: 1,
-        name: "I really need to do this task!",
+        name: "Take Landon Out",
         completed: false
       },
       {
         id: 2,
-        name: "this one is a little less pressing, so ofc i finished it first",
+        name: "Meditate",
         completed: true
       }] ,
       reminders: ['positive', 'generous', 'accountable']
