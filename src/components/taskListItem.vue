@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { Task } from "../models"
-import { useStore } from "../store"
 
 const props = defineProps({
   task: Task
 })
-
-const store = useStore()
 </script>
 
 <template>
@@ -20,7 +17,7 @@ const store = useStore()
         :checked="props.task.completed"
         class="checkbox checkbox-lg"
         :class="{ 'checkbox-primary': props.task.completed }"
-        @change="store.toggleTask(props.task.id)" />
+        @change="task.toggle" />
     </div>
   </div>
 </template>

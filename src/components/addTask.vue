@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue"
 
-import { useStore } from "../store"
+import { Task } from "~models"
 
 const input = ref("")
 
-const store = useStore()
-
 function didAddTask() {
   if (!input.value) return
-  store.addTask(input.value)
+
+  Task.fromName(input.value)
 
   input.value = ""
 }

@@ -3,13 +3,14 @@ import "./index.css"
 
 import { createPinia } from "pinia"
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate"
-import { computed, getCurrentInstance } from "vue"
+import { computed, getCurrentInstance, onMounted } from "vue"
+
+import { Task } from "~models"
 
 import AddTask from "./components/addTask.vue"
 import IntentionsSection from "./components/intentionsSection.vue"
 import TaskListItem from "./components/taskListItem.vue"
 import TasksContainer from "./components/tasksContainer.vue"
-import { useStore } from "./store"
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
@@ -18,19 +19,8 @@ const instance = getCurrentInstance()
 
 instance.appContext.app.use(pinia)
 
-const store = useStore()
-
-const sortedTasks = computed(() => {
-  // return sorted copy of tasks, so we don't mutate the original
-  return [...store.tasks].sort((a, b) => {
-    if (a.completed && !b.completed) {
-      return 1
-    } else if (!a.completed && b.completed) {
-      return -1
-    } else {
-      return 0
-    }
-  })
+const allSorted = computed(() => {
+  return Task.allSorted()
 })
 
 // TODO:
@@ -54,7 +44,7 @@ const sortedTasks = computed(() => {
       </div>
     </h1>
 
-    <IntentionsSection class="flex-1" :intentions="store.intentions" />
+    <!-- <IntentionsSection class="flex-1" :intentions="store.intentions" /> -->
 
     <TasksContainer>
       <h1 class="text-3xl text-zinc-100 font-extrabold flex-1 text-center mb-8">
@@ -65,7 +55,7 @@ const sortedTasks = computed(() => {
 
       <TransitionGroup name="list" tag="div">
         <TaskListItem
-          v-for="task in sortedTasks"
+          v-for="task in allSorted"
           :key="task.id"
           :task="task"
           class="flex-1" />

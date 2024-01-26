@@ -1,20 +1,34 @@
 import { v4 as uuidv4 } from "uuid"
-
+import { computed } from "vue"
 import { useStore } from "~store"
 
 type UUID = string
 
-const store = useStore()
 
 type TaskDefinition = {
   id?: UUID
   name: string
   completed?: boolean
-  createdAt?: Date
-  completedAt?: Date | null
+  createdAt?: Date | string
+  completedAt?: Date | string | null
 }
 
-export class Task {
+
+class Base {
+
+  public static get store() {
+    return useStore()
+  }
+
+  public get store() {
+    return Base.store
+  }
+}
+
+export class Task extends Base {
+
+
+
   protected _id: UUID
 
   public name: string
@@ -23,6 +37,8 @@ export class Task {
   public completedAt = null
 
   constructor(payload: TaskDefinition) {
+    super()
+
     this._id = payload.id || uuidv4()
     this.name = payload.name
     this.completed = payload.completed
@@ -34,13 +50,18 @@ export class Task {
     return this._id
   }
 
+  public toggle() {
+    this.completed = !this.completed
+    this.completedAt = this.completed ? new Date() : null
+  }
+
   public static fromName(name: string): Task {
     const task = new Task({
       name
     })
 
     // add to store
-    store.addTask(task)
+    this.store.addTask(task)
 
     return task
   }
@@ -50,11 +71,24 @@ export class Task {
       return new Task(taskObject)
     })
   }
+
+  public static get all()  {
+    return this.store.tasks
+  }
+
+  public static allSorted() {
+      // return sorted copy of tasks, so we don't mutate the original
+      return [...this.all].sort((a, b) => {
+        if (a.completed && !b.completed) {
+          return 1
+        } else if (!a.completed && b.completed) {
+          return -1
+        } else {
+          return 0
+        }
+      })
+
+
+}
 }
 
-export class Domain {
-  id: UUID
-  name: string
-  createdAt: Date
-  updatedAt: Date
-}

@@ -7,26 +7,50 @@ import { Task } from "~models"
 // and `Store` (e.g. `useUserStore`, `useCartStore`, `useProductStore`)
 // the first argument is a unique id of the store across your application
 
+
+
+
 export const useStore = defineStore("mindful", {
   persist: {
     afterRestore(context) {
       // transform entities from Pojos (plain old javascript  objects) to plain objects
+      // add defaults here
+      const defaults = [
 
-      context.store.$state.tasks = Task.fromObjects(context.store.$state.tasks)
+          {
+            "completed": false,
+            "createdAt": "2024-01-26T04:56:35.000Z",
+            "completedAt": null,
+            "id": "e18a0c8a-8cb9-4de6-89dd-77a330c57601",
+            "name": "Take Landon Out"
+        },
+        {
+          "completed": false,
+          "createdAt": "2024-01-26T04:56:35.000Z",
+          "completedAt": null,
+          "id": "3900ad1b-4c51-45e8-893e-32acc08bf68c",
+          "name": "Meditate"
+      }
+
+      ]
+      if (context.store.$state.tasks) {
+        context.store.$state.tasks = Task.fromObjects(context.store.$state.tasks)
+
+      } else {
+        context.store.$state.tasks = Task.fromObjects(defaults)
+      }
     }
   },
   state: () => {
     return {
-      tasks: [
-        Task.fromName("Take Landon Out"),
-        Task.fromName("Meditate")
-      ] as Task[],
+      tasks: [] as Task[],
       intentions: ["positive", "generous", "accountable"]
     }
   },
   actions: {
     addTask(task: Task) {
       this.tasks.push(task)
+      console.log(this.tasks)
     },
     toggleTask(id: string) {
       this.tasks = this.tasks.map((task) => {
