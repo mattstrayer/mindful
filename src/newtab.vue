@@ -64,10 +64,10 @@ const sortedTasks = computed(() => {
 
       <TransitionGroup name="list" tag="div">
         <TaskListItem
-          :task="task"
           v-for="task in sortedTasks"
-          class="flex-1"
-          :key="task.id" />
+          :key="task.id"
+          :task="task"
+          class="flex-1" />
       </TransitionGroup>
     </TasksContainer>
   </div>

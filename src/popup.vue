@@ -1,3 +1,21 @@
+<script setup>
+import { reactive } from "vue"
+
+import "./index.css"
+
+const state = reactive({ count: 0, action: null })
+
+function increment() {
+  state.count++
+  state.action = "increment"
+}
+
+function decrement() {
+  state.count--
+  state.action = "decrement"
+}
+</script>
+
 <template>
   <div>
     <h2 class="text-center">
@@ -34,20 +52,3 @@
   font-weight: bold;
 }
 </style>
-
-<script setup>
-import { reactive } from "vue"
-
-import "./index.css"
-const state = reactive({ count: 0, action: null })
-
-function increment() {
-  state.count++
-  state.action = "increment"
-}
-
-function decrement() {
-  state.count--
-  state.action = "decrement"
-}
-</script>

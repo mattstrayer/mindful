@@ -1,15 +1,21 @@
-import { v4 as uuidv4 } from 'uuid'
-type UUID = string
+import { v4 as uuidv4 } from "uuid"
 
-import { useStore } from '~store'
+import { useStore } from "~store"
+
+type UUID = string
 
 const store = useStore()
 
-type TaskDefinition = { id?: UUID, name: string, completed?: boolean, createdAt?: Date, completedAt?: Date | null }
+type TaskDefinition = {
+  id?: UUID
+  name: string
+  completed?: boolean
+  createdAt?: Date
+  completedAt?: Date | null
+}
 
 export class Task {
-
-  protected _id : UUID
+  protected _id: UUID
 
   public name: string
   public completed = false
@@ -29,7 +35,6 @@ export class Task {
   }
 
   public static fromName(name: string): Task {
-
     const task = new Task({
       name
     })
@@ -41,14 +46,11 @@ export class Task {
   }
 
   public static fromObjects(taskObjects: Array<TaskDefinition>): Array<Task> {
-
     return taskObjects.map((taskObject) => {
       return new Task(taskObject)
     })
-
   }
 }
-
 
 export class Domain {
   id: UUID
@@ -56,5 +58,3 @@ export class Domain {
   createdAt: Date
   updatedAt: Date
 }
-
-
