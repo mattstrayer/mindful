@@ -2,8 +2,6 @@
 import { Task } from "../models"
 import { useStore } from "../store"
 
-const id = Math.random().toString(36).substring(2, 15)
-
 const props = defineProps({
   task: Task
 })

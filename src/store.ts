@@ -9,23 +9,32 @@ import { Task } from '~models'
 
 export const useStore = defineStore('mindful', {
 
-  persist: true,
+  persist: {
+    afterRestore(context) {
+
+      // transform entities from Pojos (plain old javascript  objects) to plain objects
+
+      context.store.$state.tasks = context.store.$state.tasks.map((task) => {
+
+      })
+
+    },
+
+  },
   state: () => {
     return {
       tasks: [
-        new Task('Take Landon Out'),
-        new Task('Meditate'),
-      ] ,
-      reminders: ['positive', 'generous', 'accountable']
+        Task.fromName('Take Landon Out'),
+        Task.fromName('Meditate'),
+      ] as Task[],
+      intentions: ['positive', 'generous', 'accountable']
+
     }
   },
   actions: {
 
-    addTask(name: string) {
-      const task = { id: this.tasks.length + 1, name, completed: false, createdAt: new Date()}
-
+    addTask(task: Task) {
       this.tasks.push(task)
-
     },
     toggleTask(id: string) {
       this.tasks = this.tasks.map((task) => {

@@ -6,7 +6,7 @@ import piniaPluginPersistedstate from "pinia-plugin-persistedstate"
 import { computed, getCurrentInstance } from "vue"
 
 import AddTask from "./components/addTask.vue"
-import RemindersSection from "./components/remindersSection.vue"
+import IntentionsSection from "./components/intentionsSection.vue"
 import TaskListItem from "./components/taskListItem.vue"
 import TasksContainer from "./components/tasksContainer.vue"
 import { useStore } from "./store"
@@ -53,7 +53,7 @@ const sortedTasks = computed(() => {
       </div>
     </h1>
 
-    <RemindersSection class="flex-1" :reminders="store.reminders" />
+    <IntentionsSection class="flex-1" :intentions="store.intentions" />
 
     <TasksContainer>
       <h1 class="text-3xl text-zinc-100 font-extrabold flex-1 text-center mb-8">
