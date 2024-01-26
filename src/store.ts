@@ -24,4 +24,13 @@ export const useStore = defineStore('mindful', {
       reminders: ['positive', 'generous', 'accountable']
     }
   },
+  actions: {
+
+    addTask(name: string) {
+      const task = { id: this.tasks.length + 1, name, completed: false, createdAt: new Date()}
+
+      this.tasks.push(task)
+
+    }
+  }
 })
