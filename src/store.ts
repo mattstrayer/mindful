@@ -12,7 +12,7 @@ export const useStore = defineStore("mindful", {
     afterRestore(context) {
       // transform entities from Pojos (plain old javascript  objects) to plain objects
 
-      context.store.$state.tasks = context.store.$state.tasks.map((task) => {})
+      context.store.$state.tasks = Task.fromObjects(context.store.$state.tasks)
     }
   },
   state: () => {
