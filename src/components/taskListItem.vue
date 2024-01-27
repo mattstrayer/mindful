@@ -4,6 +4,10 @@ import { Task } from "../models"
 const props = defineProps({
   task: Task
 })
+
+const didChange = () => {
+  props.task.toggle()
+}
 </script>
 
 <template>
@@ -17,7 +21,7 @@ const props = defineProps({
         :checked="props.task.completed"
         class="checkbox checkbox-lg"
         :class="{ 'checkbox-primary': props.task.completed }"
-        @change="task.toggle" />
+        @change="didChange" />
     </div>
   </div>
 </template>

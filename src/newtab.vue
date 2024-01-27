@@ -6,12 +6,13 @@ import { createPinia } from "pinia"
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate"
 import { computed, getCurrentInstance } from "vue"
 
-import { Intention, Task } from "~models"
+import { Task } from "~models"
 
 import AddTask from "./components/addTask.vue"
 import IntentionsSection from "./components/intentionsSection.vue"
 import TaskListItem from "./components/taskListItem.vue"
 import TasksContainer from "./components/tasksContainer.vue"
+import { useStore } from "./store"
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
@@ -21,8 +22,14 @@ const instance = getCurrentInstance()
 instance.appContext.app.use(pinia)
 instance.appContext.app.use(MotionPlugin)
 
-const allSorted = computed(() => {
-  return Task.allSorted()
+const store = useStore()
+
+const pastSorted = computed(() => {
+  return Task.sorted(store.pastTasks)
+})
+
+const todaySorted = computed(() => {
+  return Task.sorted(store.todaysTasks)
 })
 </script>
 
@@ -43,7 +50,7 @@ const allSorted = computed(() => {
       </div>
     </h1>
 
-    <IntentionsSection class="flex-1" :intentions="Intention.all" />
+    <IntentionsSection class="flex-1" :intentions="store.allIntentions" />
 
     <TasksContainer>
       <h1 class="text-3xl text-zinc-100 font-extrabold flex-1 text-center mb-8">
@@ -54,11 +61,25 @@ const allSorted = computed(() => {
 
       <TransitionGroup name="list" tag="div">
         <TaskListItem
-          v-for="task in allSorted"
+          v-for="task in todaySorted"
           :key="task.id"
           :task="task"
           class="flex-1" />
       </TransitionGroup>
+
+      <h1 class="text-3xl text-zinc-100 font-extrabold flex-1 text-center mb-8">
+        Past
+      </h1>
+
+      <TransitionGroup name="list" tag="div">
+        <TaskListItem
+          v-for="task in pastSorted"
+          :key="task.id"
+          :task="task"
+          class="flex-1" />
+      </TransitionGroup>
+
+      <!-- make this collapsable  -->
     </TasksContainer>
   </div>
 </template>

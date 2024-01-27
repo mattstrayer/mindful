@@ -15,6 +15,6 @@ const props = withDefaults(defineProps<Props>(), {
     <h1
       v-for="(intention, index) in props.intentions"
       :key="index"
-      v-text="intention" />
+      v-text="intention?.name" />
   </article>
 </template>
