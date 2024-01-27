@@ -1,3 +1,5 @@
+// Not needed because of the Models static methods to init from Objects
+
 export default class JsonParserService {
   // Takes a json object and keys to transform from strings to Dates
 
