@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Intention } from "~models"
+import type { Intention } from "~/models"
 
 export interface Props {
   intentions?: Array<Intention>

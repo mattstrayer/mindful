@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Task } from "../models"
+import GradientBorder from "./gradientBorder.vue"
 
 const props = defineProps({
   task: Task
@@ -23,6 +24,7 @@ const didChange = () => {
         :class="{ 'checkbox-primary': props.task.completed }"
         @change="didChange" />
     </div>
+    <GradientBorder class="flex flex-1 flex-row" />
   </div>
 </template>
 

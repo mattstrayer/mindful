@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid"
 
-import { useStore } from "~store"
+import { useStore } from "~/store"
 
 type TaskDefinition = {
   id?: UUID

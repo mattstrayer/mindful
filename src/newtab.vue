@@ -6,7 +6,7 @@ import { createPinia } from "pinia"
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate"
 import { computed, getCurrentInstance } from "vue"
 
-import { Task } from "~models"
+import { Task } from "~/models"
 
 import AddTask from "./components/addTask.vue"
 import IntentionsSection from "./components/intentionsSection.vue"

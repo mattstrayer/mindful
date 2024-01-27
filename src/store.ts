@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 
-import { Intention, Task } from "~models"
+import { Intention, Task } from "~/models"
 
 // You can name the return value of `defineStore()` anything you want,
 // but it's best to use the name of the store and surround it with `use`

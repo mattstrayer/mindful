@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 
-import { Task } from "~models"
+import { Task } from "~/models"
 
 const input = ref("")
 
