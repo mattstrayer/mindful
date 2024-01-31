@@ -2,53 +2,31 @@
 import { reactive } from "vue"
 
 import "./index.css"
-
-const state = reactive({ count: 0, action: null })
-
-function increment() {
-  state.count++
-  state.action = "increment"
-}
-
-function decrement() {
-  state.count--
-  state.action = "decrement"
-}
 </script>
 
 <template>
-  <div>
-    <h2 class="text-center">
-      Welcome to your
-      <a href="https://www.plasmo.com" target="_blank">Plasmo</a> Extension!
-    </h2>
-
-    <div class="container">
-      <button @click="decrement">-</button>
-      <p>
-        <b>{{ state.count }}</b>
-      </p>
-      <button @click="increment">+</button>
-    </div>
+  <div class="container flex flex-col justify-center max-w-[600px] mx-auto">
+    <h1
+      class="text-zinc-100 text-3xl text-center font-extrabold mb-4 line leading-snug">
+      mindful
+    </h1>
   </div>
-  <p v-if="state.action" class="action text-center">
-    {{ state.action }}
-  </p>
 </template>
 
 <style>
+#__plasmo {
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
 .container {
   min-width: 470px;
+  height: 100%;
+
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 47px;
-}
-.text-center {
-  text-align: center;
-}
-.action {
-  color: #470;
-  font-weight: bold;
 }
 </style>

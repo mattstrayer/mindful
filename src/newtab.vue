@@ -10,7 +10,6 @@ import { Task } from "~/models"
 
 import AddTask from "./components/addTask.vue"
 import BreathingAnimation from "./components/breathingAnimation.vue"
-import IntentionsSection from "./components/intentionsSection.vue"
 import TaskListItem from "./components/taskListItem.vue"
 import TasksContainer from "./components/tasksContainer.vue"
 import { useStore } from "./store"
@@ -58,7 +57,7 @@ function updateDisplayedIntention() {
       </BreathingAnimation>
     </h1>
 
-    <TasksContainer>
+    <TasksContainer class="pb-8">
       <h1 class="text-3xl text-zinc-100 font-extrabold flex-1 text-center mb-8">
         Today
       </h1>
@@ -73,7 +72,8 @@ function updateDisplayedIntention() {
           class="flex-1" />
       </TransitionGroup>
 
-      <h1 class="text-3xl text-zinc-100 font-extrabold flex-1 text-center mb-8">
+      <h1
+        class="text-3xl text-zinc-100 font-extrabold flex-1 text-center mb-8 mt-8">
         Past
       </h1>
 
