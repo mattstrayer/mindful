@@ -4,7 +4,7 @@ import "./index.css"
 import { MotionPlugin } from "@vueuse/motion"
 import { createPinia } from "pinia"
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate"
-import { computed, getCurrentInstance } from "vue"
+import { computed, getCurrentInstance, ref } from "vue"
 
 import { Task } from "~/models"
 
@@ -32,21 +32,31 @@ const pastSorted = computed(() => {
 const todaySorted = computed(() => {
   return Task.sorted(store.todaysTasks)
 })
+
+const displayedIntention = ref(store.intentions[0]?.name || "mindful")
+
+function updateDisplayedIntention() {
+  const index = store.intentions.findIndex(
+    (intention) => intention?.name === displayedIntention.value
+  )
+
+  const nextIntention = store.intentions[index + 1] || store.intentions[0]
+  if (nextIntention) {
+    displayedIntention.value = nextIntention.name
+  }
+}
 </script>
 
 <template>
   <div class="container flex flex-col justify-center max-w-[600px] mx-auto">
     <h1
       class="text-zinc-100 text-6xl text-center font-extrabold mb-4 line leading-snug">
-      <BreathingAnimation> be </BreathingAnimation>
-      <!-- TODO: use vue motion here  https://github.com/vueuse/motion -->
-      <!-- this div should actually take in the 3 reminders and should be animated -->
-      <!-- be: mindful as the default, and then let the user add in the other x amount of reminders -->
+      be
 
-      <BreathingAnimation> mindful </BreathingAnimation>
+      <BreathingAnimation @completed-iteration="updateDisplayedIntention">
+        {{ displayedIntention }}
+      </BreathingAnimation>
     </h1>
-
-    <IntentionsSection class="flex-1" :intentions="store.allIntentions" />
 
     <TasksContainer>
       <h1 class="text-3xl text-zinc-100 font-extrabold flex-1 text-center mb-8">

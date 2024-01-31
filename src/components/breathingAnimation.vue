@@ -4,6 +4,8 @@ import { ref } from "vue"
 
 const target = ref<HTMLElement>()
 
+const emit = defineEmits(["completed-iteration"])
+
 const motionInstance = useMotion(target, {
   initial: {
     opacity: 0
@@ -26,6 +28,7 @@ const motionInstance = useMotion(target, {
       duration: 8000,
       type: "easeOut",
       onComplete() {
+        emit("completed-iteration")
         motionInstance.variant.value = "enter"
       }
     }
