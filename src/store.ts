@@ -23,6 +23,8 @@ export const useStore = defineStore("mindful", {
   },
   state: () => {
     return {
+      showSettings: false,
+      settings: {},
       tasks: [] as Array<Task>,
       intentions: [
         new Intention({ name: "positive" }),
@@ -48,6 +50,18 @@ export const useStore = defineStore("mindful", {
   actions: {
     addTask(task: Task) {
       this.tasks.push(task)
+    },
+    addIntention(intention: Intention) {
+      this.intentions.push(intention)
+    },
+    removeIntention(id: string) {
+      this.intentions = this.intentions.filter((intention) => {
+        return intention.id !== id
+      })
+    },
+
+    toggleSettingsDisplay() {
+      this.showSettings = !this.showSettings
     },
 
     toggleTask(id: string) {

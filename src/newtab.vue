@@ -12,6 +12,7 @@ import AddTask from "./components/addTask.vue"
 import BreathingAnimation from "./components/breathingAnimation.vue"
 import TaskListItem from "./components/taskListItem.vue"
 import TasksContainer from "./components/tasksContainer.vue"
+import SettingsPage from "./pages/settingsPage.vue"
 import { useStore } from "./store"
 
 const pinia = createPinia()
@@ -47,46 +48,60 @@ function updateDisplayedIntention() {
 </script>
 
 <template>
-  <div class="container flex flex-col justify-center max-w-[600px] mx-auto">
-    <h1
-      class="text-zinc-100 text-6xl text-center font-extrabold mb-4 line leading-snug">
-      be
+  <div>
+    <div class="w-full text-right text-zinc-500 pr-4 mt-4 text-xl">
+      <button
+        :class="{ 'text-zinc-100': store.showSettings }"
+        @click="store.toggleSettingsDisplay">
+        settings
+      </button>
+    </div>
 
-      <BreathingAnimation @completed-iteration="updateDisplayedIntention">
-        {{ displayedIntention }}
-      </BreathingAnimation>
-    </h1>
+    <div class="container flex flex-col justify-center max-w-[600px] mx-auto">
+      <SettingsPage v-if="store.showSettings" />
+      <div v-else>
+        <h1
+          class="text-zinc-100 text-6xl text-center font-extrabold mb-4 line leading-snug">
+          be
 
-    <TasksContainer class="pb-8">
-      <h1 class="text-3xl text-zinc-100 font-extrabold flex-1 text-center mb-8">
-        Today
-      </h1>
+          <BreathingAnimation @completed-iteration="updateDisplayedIntention">
+            {{ displayedIntention }}
+          </BreathingAnimation>
+        </h1>
 
-      <AddTask class="mb-12" />
+        <TasksContainer class="pb-8">
+          <h1
+            class="text-3xl text-zinc-100 font-extrabold flex-1 text-center mb-8">
+            Today
+          </h1>
 
-      <TransitionGroup name="list" tag="div">
-        <TaskListItem
-          v-for="task in todaySorted"
-          :key="task.id"
-          :task="task"
-          class="flex-1" />
-      </TransitionGroup>
+          <AddTask class="mb-12" />
 
-      <h1
-        class="text-3xl text-zinc-100 font-extrabold flex-1 text-center mb-8 mt-8">
-        Past
-      </h1>
+          <TransitionGroup name="list" tag="div">
+            <TaskListItem
+              v-for="task in todaySorted"
+              :key="task.id"
+              :task="task"
+              class="flex-1" />
+          </TransitionGroup>
 
-      <TransitionGroup name="list" tag="div">
-        <TaskListItem
-          v-for="task in pastSorted"
-          :key="task.id"
-          :task="task"
-          class="flex-1" />
-      </TransitionGroup>
+          <h1
+            class="text-3xl text-zinc-100 font-extrabold flex-1 text-center mb-8 mt-8">
+            Past
+          </h1>
 
-      <!-- make this collapsable  -->
-    </TasksContainer>
+          <TransitionGroup name="list" tag="div">
+            <TaskListItem
+              v-for="task in pastSorted"
+              :key="task.id"
+              :task="task"
+              class="flex-1" />
+          </TransitionGroup>
+
+          <!-- make this collapsable  -->
+        </TasksContainer>
+      </div>
+    </div>
   </div>
 </template>
 
