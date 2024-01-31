@@ -4,9 +4,5 @@ module.exports = {
   safelist: ["dark"],
   content: ["./components/**/*.{ts,tsx,vue}", "./src/**/*.{ts,tsx,vue}"],
 
-  plugins: [
-    require("@tailwindcss/typography"),
-    require("tailwindcss-animated"),
-    require("daisyui")
-  ]
+  plugins: [require("@tailwindcss/typography"), require("daisyui")]
 }

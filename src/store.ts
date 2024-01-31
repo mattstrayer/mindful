@@ -23,12 +23,12 @@ export const useStore = defineStore("mindful", {
   },
   state: () => {
     return {
-      tasks: [] as Task[],
+      tasks: [] as Array<Task>,
       intentions: [
         new Intention({ name: "positive" }),
         new Intention({ name: "generous" }),
         new Intention({ name: "accountable" })
-      ] as Intention[]
+      ] as Array<Intention>
     }
   },
 

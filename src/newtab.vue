@@ -9,6 +9,7 @@ import { computed, getCurrentInstance } from "vue"
 import { Task } from "~/models"
 
 import AddTask from "./components/addTask.vue"
+import BreathingAnimation from "./components/breathingAnimation.vue"
 import IntentionsSection from "./components/intentionsSection.vue"
 import TaskListItem from "./components/taskListItem.vue"
 import TasksContainer from "./components/tasksContainer.vue"
@@ -37,17 +38,12 @@ const todaySorted = computed(() => {
   <div class="container flex flex-col justify-center max-w-[600px] mx-auto">
     <h1
       class="text-zinc-100 text-6xl text-center font-extrabold mb-4 line leading-snug">
-      <div
-        class="animate-pulse animate-infinite animate-duration-[6000ms] animate-delay-1000 animate-ease-in-out">
-        be
-      </div>
+      <BreathingAnimation> be </BreathingAnimation>
       <!-- TODO: use vue motion here  https://github.com/vueuse/motion -->
       <!-- this div should actually take in the 3 reminders and should be animated -->
       <!-- be: mindful as the default, and then let the user add in the other x amount of reminders -->
-      <div
-        class="animate-pulse animate-infinite animate-duration-[6000ms] animate-delay-1000 animate-ease-in-out">
-        mindful
-      </div>
+
+      <BreathingAnimation> mindful </BreathingAnimation>
     </h1>
 
     <IntentionsSection class="flex-1" :intentions="store.allIntentions" />
