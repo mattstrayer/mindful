@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from "vue"
+
 import { useStore } from "~/store"
 
 import { Intention } from "../models"
@@ -8,8 +10,15 @@ const props = defineProps({
   intention: Intention
 })
 
-const didRemove = () => {
-  useStore().removeIntention(props.intention?.id)
+const showConfirmation = ref(false)
+
+function didRemove() {
+  if (showConfirmation.value === true) {
+    useStore().removeIntention(props.intention?.id)
+    showConfirmation.value = false
+  } else {
+    showConfirmation.value = true
+  }
 }
 </script>
 
@@ -19,8 +28,16 @@ const didRemove = () => {
       <h1
         class="flex flex-col leading-[3rem] text-base"
         v-text="intention?.name" />
-      <button class="btn btn-square btn-sm flex flex-col" @click="didRemove">
+      <button
+        class="btn btn-sm flex flex-col"
+        :class="{
+          'btn-square': !showConfirmation,
+          'btn-error': showConfirmation
+        }"
+        @click="didRemove">
+        <span v-if="showConfirmation">confirm?</span>
         <svg
+          v-else
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6"
           fill="none"
