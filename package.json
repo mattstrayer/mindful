@@ -45,7 +45,7 @@
     "eslint-plugin-vue": "9.21.1",
     "npm-run-all2": "6.1.2",
     "postcss": "8.4.33",
-    "prettier": "3.0.3",
+    "prettier": "3.2.4",
     "tailwindcss": "3.4.1",
     "typescript": "5.2.2",
     "vue-tsc": "1.8.27"
