@@ -19,7 +19,7 @@ function didAddTask() {
     <input
       v-model="input"
       type="text"
-      placeholder="I want to... (enter to add)"
+      placeholder="I want to..."
       class="input input-bordered join-item w-full"
       @keyup.enter="didAddTask" />
     <button class="btn btn-primary join-item" @click="didAddTask">add</button>

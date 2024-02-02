@@ -19,7 +19,7 @@ function didAddIntention() {
     <input
       v-model="input"
       type="text"
-      placeholder="I intend to be... (enter to add)"
+      placeholder="I intend to be..."
       class="input input-bordered join-item w-full"
       @keyup.enter="didAddIntention" />
     <button class="btn btn-primary join-item" @click="didAddIntention">
