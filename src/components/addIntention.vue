@@ -1,14 +1,17 @@
 <script setup lang="ts">
+import { useRepo } from "pinia-orm"
 import { ref } from "vue"
 
-import { Intention } from "~/models"
+import IntentionRepository from "~/repositories/intentionRepository"
 
 const input = ref("")
 
 function didAddIntention() {
   if (!input.value) return
 
-  Intention.fromName(input.value)
+  useRepo(IntentionRepository).save({
+    name: input.value
+  })
 
   input.value = ""
 }

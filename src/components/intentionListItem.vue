@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { useRepo } from "pinia-orm"
 import { ref } from "vue"
 
-import { useStore } from "~/store"
+import IntentionRepository from "~/repositories/intentionRepository"
 
 import { Intention } from "../models"
 import GradientBorder from "./gradientBorder.vue"
@@ -14,7 +15,7 @@ const showConfirmation = ref(false)
 
 function didRemove() {
   if (showConfirmation.value === true) {
-    useStore().removeIntention(props.intention?.id)
+    useRepo(IntentionRepository).destroy(props.intention?.id)
     showConfirmation.value = false
   } else {
     showConfirmation.value = true

@@ -1,14 +1,17 @@
 <script setup lang="ts">
+import { useRepo } from "pinia-orm"
 import { ref } from "vue"
 
-import { Task } from "~/models"
+import TaskRepository from "~/repositories/taskRepository"
 
 const input = ref("")
 
 function didAddTask() {
   if (!input.value) return
 
-  Task.fromName(input.value)
+  useRepo(TaskRepository).save({
+    name: input.value
+  })
 
   input.value = ""
 }

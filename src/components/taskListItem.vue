@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useRepo } from "pinia-orm"
+
 import { Task } from "../models"
 import GradientBorder from "./gradientBorder.vue"
 
@@ -7,7 +9,15 @@ const props = defineProps({
 })
 
 const didChange = () => {
-  props.task.toggle()
+  if (props.task.completed) {
+    useRepo(Task)
+      .where("id", props.task.id)
+      .update({ completed: false, completedAt: null })
+  } else {
+    useRepo(Task)
+      .where("id", props.task.id)
+      .update({ completed: true, completedAt: new Date() })
+  }
 }
 </script>
 

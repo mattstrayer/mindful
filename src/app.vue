@@ -2,68 +2,92 @@
 import "./index.css"
 
 import { createPinia } from "pinia"
+import { createORM, mapRepos, useRepo } from "pinia-orm"
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate"
-import { computed, getCurrentInstance, ref } from "vue"
-
-import { Task } from "~/models"
+import { computed, getCurrentInstance, onMounted, ref } from "vue"
+import type { Ref } from "vue"
 
 import AddTask from "./components/addTask.vue"
 import BreathingAnimation from "./components/breathingAnimation.vue"
 import TaskListItem from "./components/taskListItem.vue"
 import TasksContainer from "./components/tasksContainer.vue"
+import type { Intention } from "./models"
 import SettingsPage from "./pages/settingsPage.vue"
+import IntentionRepository from "./repositories/intentionRepository"
+import TaskRepository from "./repositories/taskRepository"
 import { useStore } from "./store"
-
-const pinia = createPinia()
-pinia.use(piniaPluginPersistedstate)
 
 const instance = getCurrentInstance()
 
+const pinia = createPinia().use(createORM()).use(piniaPluginPersistedstate)
+
 instance.appContext.app.use(pinia)
 
-const store = useStore()
+const settingsStore = useStore()
+
+const store = mapRepos({
+  tasks: TaskRepository,
+  intentions: IntentionRepository
+})
 
 const pastSorted = computed(() => {
-  return Task.sorted(store.pastTasks)
+  return store.tasks().getPastTasks()
 })
 
 const todaySorted = computed(() => {
-  return Task.sorted(store.todaysTasks)
+  return store.tasks().getTodaysTasks()
 })
 
-const displayedIntention = ref(store.intentions[0]?.name || "mindful")
+const showSettings = computed(() => {
+  return settingsStore.displayUI
+})
 
-function updateDisplayedIntention() {
-  const index = store.intentions.findIndex(
-    (intention) => intention?.name === displayedIntention.value
-  )
+let intentionQueryOffset = 0
 
-  const nextIntention = store.intentions[index + 1] || store.intentions[0]
-  if (nextIntention) {
-    displayedIntention.value = nextIntention.name
+const displayIntention = ref({ name: "mindful" } as Intention)
+function fetchNewIntention() {
+  const intention = useRepo(IntentionRepository)
+    .limit(1)
+    .offset(intentionQueryOffset)
+    .get()
+
+  if (!intention.length) {
+    if (intentionQueryOffset == 0) {
+      // noting in the store.
+      return
+    }
+    intentionQueryOffset = 0
+    fetchNewIntention()
+  } else {
+    displayIntention.value = intention[0]
+    intentionQueryOffset += 1
   }
 }
+
+onMounted(() => {
+  fetchNewIntention()
+})
 </script>
 
 <template>
   <div>
     <div class="w-full text-right text-zinc-500 pr-4 mt-4 text-xl">
       <button
-        :class="{ 'text-zinc-100': store.showSettings }"
-        @click="store.toggleSettingsDisplay">
+        :class="{ 'text-zinc-100': showSettings }"
+        @click="settingsStore.displayUI = !showSettings">
         settings
       </button>
     </div>
 
     <div class="container flex flex-col justify-center max-w-[600px] mx-auto">
-      <SettingsPage v-if="store.showSettings" />
+      <SettingsPage v-if="showSettings" />
       <div v-else>
         <h1
           class="text-zinc-100 text-6xl text-center font-extrabold mb-4 line leading-snug">
           be
 
-          <BreathingAnimation @completed-iteration="updateDisplayedIntention">
-            {{ displayedIntention }}
+          <BreathingAnimation @completed-iteration="fetchNewIntention">
+            {{ displayIntention.name }}
           </BreathingAnimation>
         </h1>
 

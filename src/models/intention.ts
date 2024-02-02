@@ -1,32 +1,24 @@
-import { v4 as uuidv4 } from "uuid"
+import { Model } from 'pinia-orm'
+export default class Intention extends Model {
+  static entity = 'intentions'
+  // List of all fields (schema) of the post model. `this.string()` declares
+  // a string field type with a default value as the first argument.
+  // `this.uid()` declares a unique id if none provided.
+  static fields () {
+    return {
+      id: this.uid(),
+      name: this.string(''),
+    }
+  }
+  // For typescript support of the field include also the next lines
+  declare id: string
+  declare name: string
 
-import { useStore } from "~/store"
-
-type IntentionDefinition = {
-  id?: UUID
-  name: string
-}
-export default class Intention {
-  private id: UUID
-  public name: string
-
-  constructor(payload: IntentionDefinition) {
-    this.name = payload.name
-    this.id = payload.id || uuidv4()
+  static piniaOptions = {
+    persist: true
   }
 
-  public static fromObjects(intentionObjects: Array<IntentionDefinition>) {
-    return intentionObjects.map((intention) => {
-      return new Intention(intention)
-    })
-  }
-  public static fromName(name: string): Intention {
-    const intention = new Intention({
-      name
-    })
 
-    useStore().addIntention(intention)
 
-    return intention
-  }
+
 }
