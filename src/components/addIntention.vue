@@ -15,7 +15,7 @@ function didAddIntention() {
 </script>
 
 <template>
-  <div class="join">
+  <div class="join w-full">
     <input
       v-model="input"
       type="text"
