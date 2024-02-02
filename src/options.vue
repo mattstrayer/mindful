@@ -6,7 +6,7 @@ import "./index.css"
   <div class="container flex flex-col justify-center max-w-[600px] mx-auto">
     <h1
       class="text-zinc-100 text-3xl text-center font-extrabold mb-4 line leading-snug">
-      mindful
+      mindful options
     </h1>
   </div>
 </template>
