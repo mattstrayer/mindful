@@ -1,10 +1,11 @@
-import { Model } from 'pinia-orm'
-export default class Base extends Model {
-  static entity = 'intentions'
+import { Model } from "pinia-orm"
 
-  static fields () {
+export default class Base extends Model {
+  static entity = "intentions"
+
+  static fields() {
     return {
-      id: this.uid(),
+      id: this.uid()
     }
   }
   declare id: string

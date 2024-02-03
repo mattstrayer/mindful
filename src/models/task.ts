@@ -1,16 +1,13 @@
-
-
-
-import { Model } from 'pinia-orm'
-import { DateCast } from 'pinia-orm/dist/casts'
+import { Model } from "pinia-orm"
+import { DateCast } from "pinia-orm/dist/casts"
 
 export default class Task extends Model {
-  static entity = 'tasks'
+  static entity = "tasks"
 
-  static fields () {
+  static fields() {
     return {
       id: this.uid(),
-      name: this.string(''),
+      name: this.string(""),
       completed: this.boolean(false),
       createdAt: this.string(new Date()),
       completedAt: this.string(null)
@@ -27,15 +24,14 @@ export default class Task extends Model {
     return new Date(this.createdAt).toDateString()
   }
 
-
   static piniaOptions = {
     persist: true
   }
 
-  static casts () {
+  static casts() {
     return {
-        createdAt: DateCast,
-        compltedAt: DateCast,
+      createdAt: DateCast,
+      compltedAt: DateCast
     }
   }
 }
