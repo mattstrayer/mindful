@@ -1,10 +1,7 @@
 // This should be imported in the beginning of the app and called before everything else
 
-
 function boot() {
-  if(!this.chrome) {
-    this.chrome = this.browser;
-  }
+  this.chrome = this.chrome | this.browser
 }
 
 export default boot
