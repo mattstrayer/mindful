@@ -61,7 +61,9 @@
       "webNavigation"
     ],
     "host_permissions": [
-      "https://*/*"
+      "http://*/*",
+      "https://*/*",
+      "activeTab"
     ]
   },
   "volta": {
