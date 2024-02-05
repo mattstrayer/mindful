@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import boot from "./boot"
+
 import "./index.css"
 
 import { createPinia } from "pinia"
@@ -15,6 +17,8 @@ import SettingsPage from "./pages/settingsPage.vue"
 import IntentionRepository from "./repositories/intentionRepository"
 import TaskRepository from "./repositories/taskRepository"
 import { useStore } from "./store"
+
+boot()
 
 const instance = getCurrentInstance()
 
