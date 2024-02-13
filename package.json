@@ -22,7 +22,7 @@
     "pinia-plugin-persistedstate": "3.2.1",
     "plasmo": "0.84.2",
     "uuid": "9.0.1",
-    "vue": "3.4.18"
+    "vue": "3.4.19"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "4.1.1",
