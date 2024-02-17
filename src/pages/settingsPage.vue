@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import IntentionsList from "~/components/intentionsList.vue"
+import { useStore } from "~/store"
+
+const settingsStore = useStore()
 </script>
 
 <template>
@@ -9,6 +12,18 @@ import IntentionsList from "~/components/intentionsList.vue"
       settings
     </h1>
     <IntentionsList />
+
+    <div class="w-full text-right text-zinc-500 pr-4 mt-4 text-xl">
+      <div class="form-control">
+        <label class="label cursor-pointer">
+          <span class="label-text">Block Distracting Sites</span>
+          <input
+            type="checkbox"
+            class="toggle toggle-primary"
+            :checked="settingsStore.blockingEnabled" />
+        </label>
+      </div>
+    </div>
   </div>
 </template>
 

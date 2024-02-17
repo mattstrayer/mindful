@@ -10,6 +10,7 @@ export const useStore = defineStore("settings", {
   state: () => {
     return {
       displayUI: false,
+      blockingEnabled: true,
       settings: {}
     }
   }

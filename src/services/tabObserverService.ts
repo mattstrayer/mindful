@@ -1,7 +1,12 @@
+import { useStore } from "~/store"
 import DomainBlockingService from "./domainBlockingService"
+
+const settingsStore = useStore()
 
 export default class TabObserverService {
   static updateTabHandler(tabId, changeInfo, _tab) {
+
+    if (!settingsStore.blockingEnabled) return
     // if (tab.url) {
     //   if (tab.url.includes(chrome.runtime.getURL(""))) return
 
@@ -35,9 +40,6 @@ export default class TabObserverService {
         })
       }
 
-      // see if we need to block this.
-
-      // if we do, redirect tab to tabs/index.html?url=b64(url)
     }
   }
 }
