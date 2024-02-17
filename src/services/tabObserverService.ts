@@ -12,7 +12,7 @@ export default class TabObserverService {
     //   console.log(shouldBlock)
     // }
     if (changeInfo.url) {
-      if (changeInfo.url.includes(chrome.runtime.getURL(""))) return
+      if (changeInfo.url.startsWith(chrome.runtime.getURL(""))) return
 
       if (changeInfo.url.startsWith("chrome://")) return
 
