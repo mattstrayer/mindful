@@ -1,11 +1,11 @@
 import { useStore } from "~/store"
+
 import DomainBlockingService from "./domainBlockingService"
 
 const settingsStore = useStore()
 
 export default class TabObserverService {
   static updateTabHandler(tabId, changeInfo, _tab) {
-
     if (!settingsStore.blockingEnabled) return
     // if (tab.url) {
     //   if (tab.url.includes(chrome.runtime.getURL(""))) return
@@ -30,7 +30,6 @@ export default class TabObserverService {
       console.log(shouldBlock)
 
       const b64Url = btoa(changeInfo.url)
-      console.log(b64Url)
 
       // need to save this enttity in the store
       // store id, blocked url (for categorizing?) , and base64 url
@@ -39,7 +38,6 @@ export default class TabObserverService {
           url: `${chrome.runtime.getURL("tabs/index.html")}?url=${b64Url}`
         })
       }
-
     }
   }
 }

@@ -6,15 +6,9 @@ export default class DomainBlockingService {
   static shouldBlockDomain(domain: string): boolean {
     const parsedDomain = this.parseDomain(domain)
 
-    let res: boolean = false
-
-    this.blockedDomains.forEach((blockedDomain) => {
-      if (parsedDomain.includes(blockedDomain)) {
-        res = true
-      }
+    return this.blockedDomains.some((blockedDomain) => {
+      return parsedDomain.includes(blockedDomain)
     })
-
-    return res
   }
 
   private static parseDomain(domain: string): string {

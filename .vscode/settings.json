@@ -1,7 +1,12 @@
 {
+  "eslint.enable": true,
   "editor.formatOnSave": true,
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "eslint.codeActionsOnSave.mode": "all",
   "eslint.validate": ["javascript", "vue", "typescript"],
