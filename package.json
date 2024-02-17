@@ -53,11 +53,9 @@
   },
   "manifest": {
     "permissions": [
-      "*://*/*",
       "tabs",
       "storage",
       "webRequest",
-      "webRequestBlocking",
       "webNavigation"
     ],
     "host_permissions": [

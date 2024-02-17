@@ -1,16 +1,12 @@
 import { blockedDomains } from "../data/defaults"
 
 export default class DomainBlockingService {
-  public static blockedDomains = blockedDomains // This will load from the DomainsRepository when it gets created
+  static blockedDomains = blockedDomains // This will load from the DomainsRepository when it gets created
 
-  private static parseDomain(domain: string): string {
-    const url = new URL(domain)
-    return url.host
-  }
-  public static shouldBlockDomain(domain: string) {
+  static shouldBlockDomain(domain: string): boolean {
     const parsedDomain = this.parseDomain(domain)
 
-    let res = false
+    let res: boolean = false
 
     this.blockedDomains.forEach((blockedDomain) => {
       if (parsedDomain.includes(blockedDomain)) {
@@ -19,5 +15,10 @@ export default class DomainBlockingService {
     })
 
     return res
+  }
+
+  private static parseDomain(domain: string): string {
+    const url = new URL(domain)
+    return url.host
   }
 }

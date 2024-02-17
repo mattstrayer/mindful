@@ -17,4 +17,3 @@ export {}
 // chrome.tabs.onActivated.addListener(test)
 
 chrome.tabs.onUpdated.addListener(TabObserverService.updateTabHandler)
-
