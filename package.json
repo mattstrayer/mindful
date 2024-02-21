@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@types/webextension-polyfill": "0.10.7",
-    "@vueuse/motion": "2.0.0",
+    "@vueuse/motion": "2.1.0",
     "pinia": "2.1.7",
     "pinia-orm": "1.7.2",
     "pinia-plugin-persistedstate": "3.2.1",
