@@ -69,6 +69,6 @@
     "npm": "10.4.0"
   },
   "overrides": {
-    "@parcel/watcher": "2.1.0"
+    "@parcel/watcher": "2.4.1"
   }
 }
