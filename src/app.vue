@@ -33,10 +33,6 @@ const store = mapRepos({
   intentions: IntentionRepository
 })
 
-const pastSorted = computed(() => {
-  return store.tasks().getPastTasks()
-})
-
 const todaySorted = computed(() => {
   return store.tasks().getTodaysTasks()
 })
@@ -109,21 +105,6 @@ onMounted(() => {
               :task="task"
               class="flex-1" />
           </TransitionGroup>
-
-          <h1
-            class="text-3xl text-zinc-100 font-extrabold flex-1 text-center mb-8 mt-8">
-            Past
-          </h1>
-
-          <TransitionGroup name="list" tag="div">
-            <TaskListItem
-              v-for="task in pastSorted"
-              :key="task.id"
-              :task="task"
-              class="flex-1" />
-          </TransitionGroup>
-
-          <!-- make this collapsable  -->
         </TasksContainer>
       </div>
     </div>
