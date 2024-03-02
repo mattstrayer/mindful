@@ -1,7 +1,6 @@
 <script setup lang="ts">
+import IntentionRepository from "@/repositories/intentionRepository"
 import { mapRepos } from "pinia-orm"
-
-import IntentionRepository from "~/repositories/intentionRepository"
 
 import AddIntention from "./addIntention.vue"
 import IntentionListItem from "./intentionListItem.vue"

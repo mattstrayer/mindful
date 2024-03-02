@@ -7,3 +7,4 @@ import App from "../app.vue"
     <App />
   </div>
 </template>
+../base.vue

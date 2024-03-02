@@ -1,8 +1,7 @@
 <script setup lang="ts">
+import TaskRepository from "@/repositories/taskRepository"
 import { useRepo } from "pinia-orm"
 import { ref } from "vue"
-
-import TaskRepository from "~/repositories/taskRepository"
 
 const input = ref("")
 
