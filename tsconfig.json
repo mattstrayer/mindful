@@ -1,12 +1,12 @@
 {
-  "extends": "plasmo/templates/tsconfig.base",
+  "extends": "./.wxt/tsconfig.json",
   "exclude": ["node_modules"],
-  "include": [".plasmo/index.d.ts", "./**/*.ts", "./**/*.vue"],
+  "include": ["./**/*.ts", "./**/*.vue"],
+
   "compilerOptions": {
+    "baseUrl": "./",
     "paths": {
-      "~/*": ["./src/*"],
-      "@/*": ["./src/*"]
-    },
-    "baseUrl": "."
+      "@/*": ["src/*"]
+    }
   }
 }

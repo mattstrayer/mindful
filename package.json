@@ -2,12 +2,17 @@
   "name": "mindful",
   "displayName": "mindful",
   "version": "0.0.1",
-  "description": "A basic Plasmo extension.",
+  "description": "A basic extension.",
   "author": "matt strayer <git@mattstrayer.com>",
   "scripts": {
-    "dev": "plasmo dev",
-    "build": "plasmo build",
-    "test": "plasmo test",
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
+    "compile": "vue-tsc --noEmit",
+    "postinstall": "wxt prepare",
     "lint": "eslint ./src --ext .vue,.ts,.js  --ignore-path .gitignore",
     "lint:fix": "eslint ./src --ext .vue,.ts,.js --fix --ignore-path .gitignore",
     "format": "prettier . --check",
@@ -20,7 +25,6 @@
     "pinia": "2.1.7",
     "pinia-orm": "1.7.2",
     "pinia-plugin-persistedstate": "3.2.1",
-    "plasmo": "0.84.2",
     "uuid": "9.0.1",
     "vue": "3.4.20"
   },
@@ -28,7 +32,6 @@
     "@ianvs/prettier-plugin-sort-imports": "4.1.1",
     "@rushstack/eslint-patch": "1.7.2",
     "@tailwindcss/typography": "0.5.10",
-    "@types/chrome": "0.0.262",
     "@types/node": "20.11.20",
     "@typescript-eslint/eslint-plugin": "6.21.0",
     "@vue/eslint-config-prettier": "9.0.0",
@@ -49,7 +52,9 @@
     "prettier": "3.2.5",
     "tailwindcss": "3.4.1",
     "typescript": "5.3.3",
-    "vue-tsc": "1.8.27"
+    "vue-tsc": "1.8.27",
+    "@vitejs/plugin-vue": "^5.0.1",
+    "wxt": "^0.16.0"
   },
   "manifest": {
     "permissions": [
@@ -67,8 +72,5 @@
   "volta": {
     "node": "20.11.1",
     "npm": "10.4.0"
-  },
-  "overrides": {
-    "@parcel/watcher": "2.1.0"
   }
 }

@@ -1,8 +1,7 @@
 <script setup lang="ts">
+import IntentionRepository from "@/repositories/intentionRepository"
 import { useRepo } from "pinia-orm"
 import { ref } from "vue"
-
-import IntentionRepository from "~/repositories/intentionRepository"
 
 const input = ref("")
 

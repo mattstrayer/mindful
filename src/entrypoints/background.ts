@@ -1,7 +1,5 @@
-import boot from "./boot"
-import TabObserverService from "./services/tabObserverService"
+import TabObserverService from "../services/tabObserverService"
 
-boot()
 
 export {}
 // take cues from https://github.com/glkx/digital-detox/blob/master/src/javascript/background.js
@@ -16,4 +14,13 @@ export {}
 // chrome.tabs.onCreated.addListener(test)
 // chrome.tabs.onActivated.addListener(test)
 
-chrome.tabs.onUpdated.addListener(TabObserverService.updateTabHandler)
+
+
+export default defineBackground(() => {
+  console.log('Hello background!', { id: browser.runtime.id });
+
+
+  browser.tabs.onUpdated.addListener(TabObserverService.updateTabHandler)
+
+
+});

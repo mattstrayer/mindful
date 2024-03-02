@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import IntentionsList from "~/components/intentionsList.vue"
-import { useStore } from "~/store"
+import IntentionsList from "@/components/intentionsList.vue"
+import { useStore } from "@/store"
 
 const settingsStore = useStore()
 </script>

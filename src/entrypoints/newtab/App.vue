@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import App from "./app.vue"
+import App from "@/base.vue"
 </script>
 
 <template>
@@ -7,4 +7,3 @@ import App from "./app.vue"
     <App />
   </div>
 </template>
-./base.vue
