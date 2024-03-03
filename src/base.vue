@@ -61,6 +61,12 @@ function fetchNewIntention() {
 
 onMounted(() => {
   fetchNewIntention()
+
+  window.addEventListener("storage", (event: StorageEvent) => {
+    // reload from localstorage
+    store.tasks().piniaStore().$hydrate({ runHooks: false })
+    store.intentions().piniaStore().$hydrate({ runHooks: false })
+  })
 })
 </script>
 
