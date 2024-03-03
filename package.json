@@ -32,7 +32,7 @@
     "@ianvs/prettier-plugin-sort-imports": "4.1.1",
     "@rushstack/eslint-patch": "1.7.2",
     "@tailwindcss/typography": "0.5.10",
-    "@types/node": "20.11.20",
+    "@types/node": "20.11.24",
     "@typescript-eslint/eslint-plugin": "6.21.0",
     "@vue/eslint-config-prettier": "9.0.0",
     "@vue/eslint-config-typescript": "12.0.0",
@@ -54,7 +54,7 @@
     "typescript": "5.3.3",
     "vue-tsc": "2.0.2",
     "@vitejs/plugin-vue": "5.0.4",
-    "wxt": "0.17.5"
+    "wxt": "0.17.6"
   },
   "manifest": {
     "permissions": [
