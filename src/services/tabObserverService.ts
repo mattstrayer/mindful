@@ -37,7 +37,7 @@ export default class TabObserverService {
       // store id, blocked url (for categorizing?) , and base64 url
       if (shouldBlock) {
         browser.tabs.update(tabId, {
-          url: `${browser.runtime.getURL("tabs/index.html")}?url=${b64Url}`
+          url: `${browser.runtime.getURL("newtab.html")}?url=${b64Url}`
         })
       }
     }

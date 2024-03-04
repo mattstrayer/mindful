@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import "./index.css"
 
-import { createPinia } from "pinia"
-import { createORM, mapRepos, useRepo } from "pinia-orm"
-import piniaPluginPersistedstate from "pinia-plugin-persistedstate"
-import { computed, getCurrentInstance, onMounted, ref } from "vue"
+import { mapRepos, useRepo } from "pinia-orm"
+import { computed, onMounted, ref } from "vue"
 
 import AddTask from "./components/addTask.vue"
 import BreathingAnimation from "./components/breathingAnimation.vue"
@@ -15,12 +13,6 @@ import SettingsPage from "./pages/settingsPage.vue"
 import IntentionRepository from "./repositories/intentionRepository"
 import TaskRepository from "./repositories/taskRepository"
 import { useStore } from "./store"
-
-const instance = getCurrentInstance()
-
-const pinia = createPinia().use(createORM()).use(piniaPluginPersistedstate)
-
-instance.appContext.app.use(pinia)
 
 const settingsStore = useStore()
 
