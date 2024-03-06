@@ -20,7 +20,8 @@ const settingsStore = useSettings()
           <input
             type="checkbox"
             class="toggle toggle-primary"
-            :checked="settingsStore.blockingEnabled" />
+            :checked="settingsStore.blockingEnabled"
+            @change="settingsStore.toggleBlocking()" />
         </label>
       </div>
     </div>

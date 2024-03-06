@@ -1,11 +1,11 @@
 import { defineStore } from "pinia"
-
-// You can name the return value of `defineStore()` anything you want,
-// but it's best to use the name of the store and surround it with `use`
-// and `Store` (e.g. `useUserStore`, `useCartStore`, `useProductStore`)
-// the first argument is a unique id of the store across your application
+import { BroadcastChannel } from "broadcast-channel"
+import { MessageTypes, BlockEnabledMessage, BroadcastChannels } from "./messaging/types"
+// All interactions with the settings will be done via actions, so that we can dispatch
+// a broadcast-channel message to the worker
 
 export const useSettings = defineStore("settings", {
+  persist: true,
   state: () => {
     return {
       displayUI: false,
@@ -13,7 +13,16 @@ export const useSettings = defineStore("settings", {
       settings: {}
     }
   },
-  persist: true
+  actions: {
+
+    toggleBlocking() {
+      this.blockingEnabled = !this.blockingEnabled
+      new BroadcastChannel<BlockEnabledMessage>(BroadcastChannels.default).postMessage({
+        type: MessageTypes.blockEnabled,
+        data: this.blockingEnabled
+      })
+    }
+  }
 
 
   // getters: {
