@@ -5,6 +5,17 @@ import vue from '@vitejs/plugin-vue';
 export default defineConfig({
   srcDir: 'src',
 
+  manifest: {
+    name: 'mindful',
+    description: 'mindful app',
+    permissions: [
+      "tabs",
+      "storage",
+      "webRequest",
+      "webNavigation"
+    ]
+  },
+
   runner: {
     disabled: true, // disabled until brave support can be figured out
     // openConsole: true,
