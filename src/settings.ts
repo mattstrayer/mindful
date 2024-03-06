@@ -5,15 +5,16 @@ import { defineStore } from "pinia"
 // and `Store` (e.g. `useUserStore`, `useCartStore`, `useProductStore`)
 // the first argument is a unique id of the store across your application
 
-export const useStore = defineStore("settings", {
-  persist: {},
+export const useSettings = defineStore("settings", {
   state: () => {
     return {
       displayUI: false,
       blockingEnabled: true,
       settings: {}
     }
-  }
+  },
+  persist: true
+
 
   // getters: {
   //   allIntentions: (state) => state.intentions,

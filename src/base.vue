@@ -12,9 +12,9 @@ import type { Intention } from "./models"
 import SettingsPage from "./pages/settingsPage.vue"
 import IntentionRepository from "./repositories/intentionRepository"
 import TaskRepository from "./repositories/taskRepository"
-import { useStore } from "./store"
+import { useSettings } from "./settings"
 
-const settingsStore = useStore()
+const settingsStore = useSettings()
 
 const store = mapRepos({
   tasks: TaskRepository,

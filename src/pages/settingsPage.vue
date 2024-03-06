@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import IntentionsList from "@/components/intentionsList.vue"
-import { useStore } from "@/store"
+import { useSettings } from "@/settings"
 
-const settingsStore = useStore()
+const settingsStore = useSettings()
 </script>
 
 <template>
