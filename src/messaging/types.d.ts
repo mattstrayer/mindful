@@ -1,4 +1,6 @@
-
+declare enum BroadcastChannels {
+  default = "mindful",
+}
 
 declare type MessageHandler = (message: Message) => void
 

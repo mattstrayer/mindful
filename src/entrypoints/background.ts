@@ -10,10 +10,11 @@ export default defineBackground( () => {
 
 
   // Setup Broadcast Channel
-  const channel: BroadcastChannel<Message> = new BroadcastChannel('mindful');
+  const channel: BroadcastChannel<Message> = new BroadcastChannel(BroadcastChannels.default);
 
 
   channel.onmessage = (message) => {
+
     console.log(message.type, message.data)
   }
 });
