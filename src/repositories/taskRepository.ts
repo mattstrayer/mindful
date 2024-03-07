@@ -14,7 +14,6 @@ export default class TaskRepository extends Repository {
     return useCollect(tasks).sortBy([["completed", "asc"]]) as Task[]
   }
 
-
   getPastTasks(): Task[] {
     const now = new Date().toDateString()
 

@@ -1,21 +1,19 @@
-export  enum BroadcastChannels {
-  default = "mindful",
+export enum BroadcastChannels {
+  default = "mindful"
 }
 
-export  type MessageHandler = (message: Message) => void
+export type MessageHandler = (message: Message) => void
 
-export  enum MessageTypes {
+export enum MessageTypes {
   blockEnabled = "BLOCK_ENABLED"
 }
 
-export  interface Message  {
-  type: MessageTypes;
-  data: any;
-};
+export interface Message {
+  type: MessageTypes
+  data: any
+}
 
-
-export  interface BlockEnabledMessage extends Message {
+export interface BlockEnabledMessage extends Message {
   type: MessageTypes.blockEnabled
   data: boolean
 }
-

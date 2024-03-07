@@ -1,6 +1,12 @@
-import { defineStore } from "pinia"
 import { BroadcastChannel } from "broadcast-channel"
-import { MessageTypes, BlockEnabledMessage, BroadcastChannels } from "./messaging/types"
+import { defineStore } from "pinia"
+
+import {
+  BlockEnabledMessage,
+  BroadcastChannels,
+  MessageTypes
+} from "./messaging/types"
+
 // All interactions with the settings will be done via actions, so that we can dispatch
 // a broadcast-channel message to the worker
 
@@ -14,16 +20,16 @@ export const useSettings = defineStore("settings", {
     }
   },
   actions: {
-
     toggleBlocking() {
       this.blockingEnabled = !this.blockingEnabled
-      new BroadcastChannel<BlockEnabledMessage>(BroadcastChannels.default).postMessage({
+      new BroadcastChannel<BlockEnabledMessage>(
+        BroadcastChannels.default
+      ).postMessage({
         type: MessageTypes.blockEnabled,
         data: this.blockingEnabled
       })
     }
   }
-
 
   // getters: {
   //   allIntentions: (state) => state.intentions,

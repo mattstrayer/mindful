@@ -1,14 +1,19 @@
 // import { useStore } from "@/store"
 
-import DomainBlockingService from "./domainBlockingService"
+import { useWorkerStore } from "@/workerStore"
 import type { Tabs } from "webextension-polyfill"
 
+import DomainBlockingService from "./domainBlockingService"
 
-// const settingsStore = useStore()
+const workerStore = useWorkerStore()
 
 export default class TabObserverService {
-  static updateTabHandler(tabId: number, changeInfo: Tabs.OnUpdatedChangeInfoType, _tab: Tabs.Tab) {
-    // if (!settingsStore.blockingEnabled) return
+  static updateTabHandler(
+    tabId: number,
+    changeInfo: Tabs.OnUpdatedChangeInfoType,
+    _tab: Tabs.Tab
+  ) {
+    if (!workerStore.blockingEnabled.value) return
     // if (tab.url) {
     //   if (tab.url.includes(chrome.runtime.getURL(""))) return
 

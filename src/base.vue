@@ -58,6 +58,8 @@ onMounted(() => {
     // reload from localstorage
     store.tasks().piniaStore().$hydrate({ runHooks: false })
     store.intentions().piniaStore().$hydrate({ runHooks: false })
+
+    settingsStore.$hydrate({ runHooks: false })
   })
 })
 </script>

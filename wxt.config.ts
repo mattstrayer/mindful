@@ -1,23 +1,18 @@
-import { defineConfig } from 'wxt';
-import vue from '@vitejs/plugin-vue';
+import vue from "@vitejs/plugin-vue"
+import { defineConfig } from "wxt"
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
-  srcDir: 'src',
+  srcDir: "src",
 
   manifest: {
-    name: 'mindful',
-    description: 'mindful app',
-    permissions: [
-      "tabs",
-      "storage",
-      "webRequest",
-      "webNavigation"
-    ]
+    name: "mindful",
+    description: "mindful app",
+    permissions: ["tabs", "storage", "webRequest", "webNavigation"]
   },
 
   runner: {
-    disabled: true, // disabled until brave support can be figured out
+    disabled: true // disabled until brave support can be figured out
     // openConsole: true,
     // openDevtools: true,
     // binaries: {
@@ -27,12 +22,11 @@ export default defineConfig({
 
   imports: {
     addons: {
-      vueTemplate: true,
+      vueTemplate: true
     },
-    presets: ['vue'],
-
+    presets: ["vue"]
   },
   vite: () => ({
-    plugins: [vue()],
-  }),
-});
+    plugins: [vue()]
+  })
+})
