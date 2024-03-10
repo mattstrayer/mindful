@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import IntentionRepository from "@/repositories/intentionRepository"
-import { useRepo } from "pinia-orm"
+import { useIntentions } from "@/stores/intentionsStore"
 
 import AddIntention from "./addIntention.vue"
 import IntentionListItem from "./intentionListItem.vue"
 
-const intentions = useRepo(IntentionRepository)
+const intentionsStore = useIntentions()
 </script>
 
 <template>
@@ -19,7 +18,7 @@ const intentions = useRepo(IntentionRepository)
       <div class="collapse-content">
         <AddIntention class="mb-4" />
         <IntentionListItem
-          v-for="(intention, index) in intentions.all()"
+          v-for="(intention, index) in intentionsStore.intentions"
           :key="index"
           :intention="intention" />
       </div>

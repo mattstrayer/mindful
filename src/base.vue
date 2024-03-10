@@ -7,50 +7,50 @@ import AddTask from "./components/addTask.vue"
 import BreathingAnimation from "./components/breathingAnimation.vue"
 import TaskListItem from "./components/taskListItem.vue"
 import TasksContainer from "./components/tasksContainer.vue"
+import { Intention } from "./data/types"
 import SettingsPage from "./pages/settingsPage.vue"
 import { useSettings } from "./settings"
+import { useIntentions } from "./stores/intentionsStore"
 import { useTasks } from "./stores/tasksStore"
 
 const settingsStore = useSettings()
 const tasksStore = useTasks()
+const intentionsStore = useIntentions()
 
 const showSettings = computed(() => {
   return settingsStore.displayUI
 })
 
-let intentionQueryOffset = 0
+const currentIntention = ref(0)
 
-const displayIntention = ref({ name: "mindful" } as Intention)
+const displayIntention = computed(() => {
+  const mindful = { name: "mindful" }
+
+  if (!intentionsStore.intentions.length) {
+    return mindful
+  }
+
+  return intentionsStore.intentions[currentIntention.value]
+})
+
 function fetchNewIntention() {
-  const intention = intentionsRepo.limit(1).offset(intentionQueryOffset).get()
-
-  if (!intention.length) {
-    if (intentionQueryOffset == 0) {
-      // noting in the store.
-      return
-    }
-    intentionQueryOffset = 0
-    fetchNewIntention()
+  if (currentIntention.value >= intentionsStore.intentions.length - 1) {
+    currentIntention.value = 0
   } else {
-    displayIntention.value = intention[0]
-    intentionQueryOffset += 1
+    currentIntention.value++
   }
 }
 
 onMounted(() => {
-  fetchNewIntention()
-
+  // fetchNewIntention()
   // window.addEventListener("storage", () => {
   //   // reload from localstorage
   //   console.log("hydration running")
-
   //   useRepo(TaskRepository).piniaStore().$hydrate()
-
   //   const task = useRepo(TaskRepository).find("RUtOSU-yquoq6hfdB_rVS")
   //   debugger
   //   console.log(task)
   //   intentionsRepo.piniaStore().$hydrate()
-
   //   settingsStore.$hydrate()
   // })
 })

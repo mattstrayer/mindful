@@ -61,6 +61,11 @@ export const useTasks = defineStore("tasks", {
         type: MessageTypes.savedTask,
         data: task
       })
+    },
+
+    async saveTask(task: Task) {
+
+      this.tasks[task.id] = task
     }
   }
 })
