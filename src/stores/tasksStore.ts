@@ -1,11 +1,13 @@
 import { useTabInfoStore } from "@/data/tabInfoStore"
 import type { Task } from "@/data/types"
 import { generateUid } from "@/helpers"
-import { SavedTaskMessage } from "@/messaging/types"
+import {
+  BroadcastChannels,
+  MessageTypes,
+  SavedTaskMessage
+} from "@/messaging/types"
 import { BroadcastChannel } from "broadcast-channel"
 import { defineStore } from "pinia"
-
-import { BroadcastChannels, MessageTypes } from "@/messaging/types"
 
 // All interactions with the settings will be done via actions, so that we can dispatch
 // a broadcast-channel message to the worker
@@ -22,7 +24,6 @@ export const useTasks = defineStore("tasks", {
     todaysTasks: (state) => {
       // const today = new Date().toDateString()
 
-
       // const keys = Object.keys(state.tasks)
 
       // // keys.sort((a, b) => {return countedVotes[a] - countedVotes[b]})
@@ -34,7 +35,6 @@ export const useTasks = defineStore("tasks", {
       //   return value.createdAt?.toDateString() === today
       // })
       return state.tasks
-
     },
     find: (state) => {
       return (id: string) => {
@@ -64,7 +64,6 @@ export const useTasks = defineStore("tasks", {
     },
 
     async saveTask(task: Task) {
-
       this.tasks[task.id] = task
     }
   }

@@ -18,12 +18,9 @@ export const useIntentions = defineStore("intentions", {
     }
   },
 
-  getters: {
-
-
-  },
+  getters: {},
   actions: {
-     addIntention(name: string) {
+    addIntention(name: string) {
       // const tabInfo = await useTabInfoStore()
 
       const intention = {} as Intention
@@ -41,13 +38,13 @@ export const useIntentions = defineStore("intentions", {
       // })
     },
 
-     removeIntention(name: string) {
-
-      const index = this.intentions.findIndex(intention => intention.name === name)
+    removeIntention(name: string) {
+      const index = this.intentions.findIndex(
+        (intention) => intention.name === name
+      )
       if (index > -1) {
         this.intentions.splice(index, 1)
       }
-
 
       // new BroadcastChannel<SavedTaskMessage>(
       //   BroadcastChannels.default
@@ -56,7 +53,6 @@ export const useIntentions = defineStore("intentions", {
       //   type: MessageTypes.savedTask,
       //   data: task
       // })
-    },
-
+    }
   }
 })
