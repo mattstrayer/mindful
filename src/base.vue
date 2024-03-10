@@ -24,7 +24,7 @@ const showSettings = computed(() => {
 const currentIntention = ref(0)
 
 const displayIntention = computed(() => {
-  const mindful = { name: "mindful" }
+  const mindful = { name: "mindful" } as Intention
 
   if (!intentionsStore.intentions.length) {
     return mindful
@@ -88,9 +88,9 @@ onMounted(() => {
 
           <TransitionGroup name="list" tag="div">
             <TaskListItem
-              v-for="task of tasksStore.todaysTasks"
-              :key="task.id"
-              :task-id="task.id"
+              v-for="(_task, id) of tasksStore.todaysTasks"
+              :key="id"
+              :task-id="id"
               class="flex-1" />
           </TransitionGroup>
         </TasksContainer>

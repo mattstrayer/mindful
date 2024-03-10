@@ -4,16 +4,19 @@ import { useTasks } from "@/stores/tasksStore"
 
 import GradientBorder from "./gradientBorder.vue"
 
-const props = defineProps({
-  taskId: String
+const tasksStore = useTasks()
+
+const props = defineProps<{
+  taskId: string
+}>()
+
+let task = {} as Task
+
+onMounted(() => {
+  task = tasksStore.find(props.taskId)
 })
 
 const didChange = () => {
-  const task = useTasks().taskForId(props?.taskId)
-  if (!task) {
-    return
-  }
-
   if (task.completed) {
     task.completed = false
     task.completedAt = undefined
