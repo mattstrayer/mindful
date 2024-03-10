@@ -1,66 +1,58 @@
 <script setup lang="ts">
 import "./index.css"
 
-import { mapRepos, useRepo } from "pinia-orm"
 import { computed, onMounted, ref } from "vue"
 
 import AddTask from "./components/addTask.vue"
 import BreathingAnimation from "./components/breathingAnimation.vue"
 import TaskListItem from "./components/taskListItem.vue"
 import TasksContainer from "./components/tasksContainer.vue"
-import type { Intention } from "./models"
+import { Intention } from "./data/types"
 import SettingsPage from "./pages/settingsPage.vue"
-import IntentionRepository from "./repositories/intentionRepository"
-import TaskRepository from "./repositories/taskRepository"
 import { useSettings } from "./settings"
+import { useIntentions } from "./stores/intentionsStore"
+import { useTasks } from "./stores/tasksStore"
 
 const settingsStore = useSettings()
-
-const store = mapRepos({
-  tasks: TaskRepository,
-  intentions: IntentionRepository
-})
-
-const todaySorted = computed(() => {
-  return store.tasks().getTodaysTasks()
-})
+const tasksStore = useTasks()
+const intentionsStore = useIntentions()
 
 const showSettings = computed(() => {
   return settingsStore.displayUI
 })
 
-let intentionQueryOffset = 0
+const currentIntention = ref(0)
 
-const displayIntention = ref({ name: "mindful" } as Intention)
+const displayIntention = computed(() => {
+  const mindful = { name: "mindful" } as Intention
+
+  if (!intentionsStore.intentions.length) {
+    return mindful
+  }
+
+  return intentionsStore.intentions[currentIntention.value]
+})
+
 function fetchNewIntention() {
-  const intention = useRepo(IntentionRepository)
-    .limit(1)
-    .offset(intentionQueryOffset)
-    .get()
-
-  if (!intention.length) {
-    if (intentionQueryOffset == 0) {
-      // noting in the store.
-      return
-    }
-    intentionQueryOffset = 0
-    fetchNewIntention()
+  if (currentIntention.value >= intentionsStore.intentions.length - 1) {
+    currentIntention.value = 0
   } else {
-    displayIntention.value = intention[0]
-    intentionQueryOffset += 1
+    currentIntention.value++
   }
 }
 
 onMounted(() => {
-  fetchNewIntention()
-
-  window.addEventListener("storage", () => {
-    // reload from localstorage
-    store.tasks().piniaStore().$hydrate({ runHooks: false })
-    store.intentions().piniaStore().$hydrate({ runHooks: false })
-
-    settingsStore.$hydrate({ runHooks: false })
-  })
+  // fetchNewIntention()
+  // window.addEventListener("storage", () => {
+  //   // reload from localstorage
+  //   console.log("hydration running")
+  //   useRepo(TaskRepository).piniaStore().$hydrate()
+  //   const task = useRepo(TaskRepository).find("RUtOSU-yquoq6hfdB_rVS")
+  //   debugger
+  //   console.log(task)
+  //   intentionsRepo.piniaStore().$hydrate()
+  //   settingsStore.$hydrate()
+  // })
 })
 </script>
 
@@ -96,9 +88,9 @@ onMounted(() => {
 
           <TransitionGroup name="list" tag="div">
             <TaskListItem
-              v-for="task in todaySorted"
-              :key="task.id"
-              :task="task"
+              v-for="(_task, id) of tasksStore.todaysTasks"
+              :key="id"
+              :task-id="id"
               class="flex-1" />
           </TransitionGroup>
         </TasksContainer>
@@ -135,3 +127,4 @@ onMounted(() => {
   position: absolute;
 }
 </style>
+./stores/tasksStore
