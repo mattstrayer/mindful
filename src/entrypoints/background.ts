@@ -4,7 +4,6 @@ import { BroadcastChannel } from "broadcast-channel"
 
 import TabObserverService from "../services/tabObserverService"
 
-
 export default defineBackground(() => {
   const workerStore = useWorkerStore()
 
@@ -17,6 +16,7 @@ export default defineBackground(() => {
   )
 
   channel.onmessage = (message) => {
+    // no special logic to look at the tabId needed here. The bg worker will always respond to messages
     switch (message.type) {
       case MessageTypes.blockEnabled:
         workerStore.blockingEnabled.value = message.data

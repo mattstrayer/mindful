@@ -1,29 +1,18 @@
 <script setup lang="ts">
 import "./index.css"
 
-import { mapRepos, useRepo } from "pinia-orm"
 import { computed, onMounted, ref } from "vue"
 
 import AddTask from "./components/addTask.vue"
 import BreathingAnimation from "./components/breathingAnimation.vue"
 import TaskListItem from "./components/taskListItem.vue"
 import TasksContainer from "./components/tasksContainer.vue"
-import type { Intention } from "./models"
 import SettingsPage from "./pages/settingsPage.vue"
-import IntentionRepository from "./repositories/intentionRepository"
-import TaskRepository from "./repositories/taskRepository"
 import { useSettings } from "./settings"
+import { useTasks } from "./stores/tasksStore"
 
 const settingsStore = useSettings()
-
-const store = mapRepos({
-  tasks: TaskRepository,
-  intentions: IntentionRepository
-})
-
-const todaySorted = computed(() => {
-  return store.tasks().getTodaysTasks()
-})
+const tasksStore = useTasks()
 
 const showSettings = computed(() => {
   return settingsStore.displayUI
@@ -33,10 +22,7 @@ let intentionQueryOffset = 0
 
 const displayIntention = ref({ name: "mindful" } as Intention)
 function fetchNewIntention() {
-  const intention = useRepo(IntentionRepository)
-    .limit(1)
-    .offset(intentionQueryOffset)
-    .get()
+  const intention = intentionsRepo.limit(1).offset(intentionQueryOffset).get()
 
   if (!intention.length) {
     if (intentionQueryOffset == 0) {
@@ -54,13 +40,19 @@ function fetchNewIntention() {
 onMounted(() => {
   fetchNewIntention()
 
-  window.addEventListener("storage", () => {
-    // reload from localstorage
-    store.tasks().piniaStore().$hydrate({ runHooks: false })
-    store.intentions().piniaStore().$hydrate({ runHooks: false })
+  // window.addEventListener("storage", () => {
+  //   // reload from localstorage
+  //   console.log("hydration running")
 
-    settingsStore.$hydrate({ runHooks: false })
-  })
+  //   useRepo(TaskRepository).piniaStore().$hydrate()
+
+  //   const task = useRepo(TaskRepository).find("RUtOSU-yquoq6hfdB_rVS")
+  //   debugger
+  //   console.log(task)
+  //   intentionsRepo.piniaStore().$hydrate()
+
+  //   settingsStore.$hydrate()
+  // })
 })
 </script>
 
@@ -96,9 +88,9 @@ onMounted(() => {
 
           <TransitionGroup name="list" tag="div">
             <TaskListItem
-              v-for="task in todaySorted"
+              v-for="task of tasksStore.todaysTasks"
               :key="task.id"
-              :task="task"
+              :task-id="task.id"
               class="flex-1" />
           </TransitionGroup>
         </TasksContainer>
@@ -135,3 +127,4 @@ onMounted(() => {
   position: absolute;
 }
 </style>
+./stores/tasksStore

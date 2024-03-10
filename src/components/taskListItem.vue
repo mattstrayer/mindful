@@ -1,23 +1,28 @@
 <script setup lang="ts">
-import { useRepo } from "pinia-orm"
+import { Task } from "@/data/types"
+import { useTasks } from "@/stores/tasksStore"
 
-import { Task } from "../models"
 import GradientBorder from "./gradientBorder.vue"
 
 const props = defineProps({
-  task: Task
+  taskId: String
 })
 
 const didChange = () => {
-  if (props.task.completed) {
-    useRepo(Task)
-      .where("id", props.task.id)
-      .update({ completed: false, completedAt: null })
-  } else {
-    useRepo(Task)
-      .where("id", props.task.id)
-      .update({ completed: true, completedAt: new Date() })
+  const task = useTasks().taskForId(props?.taskId)
+  if (!task) {
+    return
   }
+
+  if (task.completed) {
+    task.completed = false
+    task.completedAt = undefined
+  } else {
+    task.completed = true
+    task.completedAt = new Date()
+  }
+
+  useTasks().saveTask(task)
 }
 </script>
 
@@ -25,14 +30,14 @@ const didChange = () => {
   <div class="flex flex-col w-full">
     <div class="flex justify-between items-center flex-row">
       <div class="flex flex-col leading-[3rem] text-base">
-        <span class="inline-block"> {{ props.task.name }}</span>
+        <span class="inline-block"> {{ task?.name }}</span>
       </div>
       <div class="flex flex-col">
         <input
           type="checkbox"
-          :checked="props.task.completed"
+          :checked="task?.completed"
           class="checkbox checkbox-lg"
-          :class="{ 'checkbox-primary': props.task.completed }"
+          :class="{ 'checkbox-primary': task?.completed }"
           @change="didChange" />
       </div>
     </div>

@@ -11,15 +11,6 @@ export default defineConfig({
     permissions: ["tabs", "storage", "webRequest", "webNavigation"]
   },
 
-  runner: {
-    disabled: true // disabled until brave support can be figured out
-    // openConsole: true,
-    // openDevtools: true,
-    // binaries: {
-    //   brave: 'Brave Browser',
-    // }
-  },
-
   imports: {
     addons: {
       vueTemplate: true
