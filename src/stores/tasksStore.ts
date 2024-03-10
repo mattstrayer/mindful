@@ -22,20 +22,26 @@ export const useTasks = defineStore("tasks", {
 
   getters: {
     todaysTasks: (state) => {
-      // const today = new Date().toDateString()
+      const today = new Date().toDateString()
 
-      // const keys = Object.keys(state.tasks)
+      return  Object.values(state.tasks).filter((task) => {
+        const createdAt = new Date(task.createdAt!).toDateString()
+        return createdAt === today
+      }).sort((a: Task, b: Task) => {
+        if (a.completed && b.completed) {
+          return 0
+        }
+        if (a.completed) {
+          return 1
+        }
+        if (b.completed) {
+          return -1
+        }
+        return 0
+      })
 
-      // // keys.sort((a, b) => {return countedVotes[a] - countedVotes[b]})
-      // let filteredPosts = keys.map(key => {
-      //     return {[key]: countedVotes[key]}
-      // })
-
-      //  Object.entries(state.tasks).filter(([_key, value]) => {
-      //   return value.createdAt?.toDateString() === today
-      // })
-      return state.tasks
     },
+
     find: (state) => {
       return (id: string) => {
         return state.tasks[id]
@@ -68,3 +74,4 @@ export const useTasks = defineStore("tasks", {
     }
   }
 })
+

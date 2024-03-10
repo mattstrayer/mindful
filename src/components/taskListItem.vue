@@ -7,16 +7,11 @@ import GradientBorder from "./gradientBorder.vue"
 const tasksStore = useTasks()
 
 const props = defineProps<{
-  taskId: string
+  task: Task
 }>()
 
-let task = {} as Task
-
-onMounted(() => {
-  task = tasksStore.find(props.taskId)
-})
-
 const didChange = () => {
+  const task = tasksStore.find(props.task.id)
   if (task.completed) {
     task.completed = false
     task.completedAt = undefined

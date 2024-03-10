@@ -88,9 +88,9 @@ onMounted(() => {
 
           <TransitionGroup name="list" tag="div">
             <TaskListItem
-              v-for="(_task, id) of tasksStore.todaysTasks"
-              :key="id"
-              :task-id="id"
+              v-for="task of tasksStore.todaysTasks"
+              :key="task.id"
+              :task="task"
               class="flex-1" />
           </TransitionGroup>
         </TasksContainer>
