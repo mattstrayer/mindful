@@ -42,17 +42,13 @@ function fetchNewIntention() {
 }
 
 onMounted(() => {
-  // fetchNewIntention()
-  // window.addEventListener("storage", () => {
-  //   // reload from localstorage
-  //   console.log("hydration running")
-  //   useRepo(TaskRepository).piniaStore().$hydrate()
-  //   const task = useRepo(TaskRepository).find("RUtOSU-yquoq6hfdB_rVS")
-  //   debugger
-  //   console.log(task)
-  //   intentionsRepo.piniaStore().$hydrate()
-  //   settingsStore.$hydrate()
-  // })
+  fetchNewIntention()
+  window.addEventListener("storage", () => {
+    // reload from localstorage
+    tasksStore.$hydrate()
+    intentionsStore.$hydrate()
+    settingsStore.$hydrate()
+  })
 })
 </script>
 
