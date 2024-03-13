@@ -44,13 +44,13 @@ export const useTasks = defineStore("tasks", {
           return 0
         })
     },
-    yesterdaysTasks: (state) => {
+    yesterdaysIncompleteTasks: (state) => {
       const yesterday = subDays(new Date(), 1)
 
       return Object.values(state.tasks).filter((task) => {
         const createdAt = new Date(task.createdAt!)
         return differenceInDays(yesterday, createdAt) === 0
-      })
+      }).filter((task) => !task.completed)
     },
 
     find: (state) => {
@@ -80,8 +80,25 @@ export const useTasks = defineStore("tasks", {
       })
     },
 
+    async resetTask(task: Task) {
+      task.completed = false
+      task.completedAt = undefined
+      task.createdAt = new Date()
+      this.tasks[task.id] = task
+    },
+
     async saveTask(task: Task) {
       this.tasks[task.id] = task
+    },
+
+    async cleanupOldTasks() {
+      const CUTOFF = 2 // days
+
+      Object.values(this.tasks).forEach((task) => {
+        if (differenceInDays(new Date(), task.createdAt!) > CUTOFF) {
+          delete this.tasks[task.id]
+        }
+      })
     }
   }
 })

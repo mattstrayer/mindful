@@ -42,6 +42,9 @@ function fetchNewIntention() {
 onMounted(() => {
   fetchNewIntention()
 
+  // cleanup on startup
+  tasksStore.cleanupOldTasks()
+
   window.addEventListener("storage", () => {
     // reload from localstorage
     tasksStore.$hydrate()
