@@ -14,7 +14,6 @@ export const useSettings = defineStore("settings", {
   persist: true,
   state: () => {
     return {
-      displayUI: false,
       blockingEnabled: true,
       settings: {}
     }

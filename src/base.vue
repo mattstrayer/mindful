@@ -17,11 +17,9 @@ const settingsStore = useSettings()
 const tasksStore = useTasks()
 const intentionsStore = useIntentions()
 
-const showSettings = computed(() => {
-  return settingsStore.displayUI
-})
-
 const currentIntention = ref(0)
+
+const showSettings = ref(false)
 
 const displayIntention = computed(() => {
   const mindful = { name: "mindful" } as Intention
@@ -43,12 +41,21 @@ function fetchNewIntention() {
 
 onMounted(() => {
   fetchNewIntention()
+
   window.addEventListener("storage", () => {
     // reload from localstorage
     tasksStore.$hydrate()
     intentionsStore.$hydrate()
     settingsStore.$hydrate()
   })
+
+  // document.addEventListener("visibilitychange", () => {
+  //   if (document.visibilityState === "visible") {
+  //     tasksStore.$hydrate()
+  //     intentionsStore.$hydrate()
+  //     settingsStore.$hydrate()
+  //   }
+  // })
 })
 </script>
 
@@ -57,7 +64,7 @@ onMounted(() => {
     <div class="w-full text-right text-zinc-500 pr-4 mt-4 text-xl">
       <button
         :class="{ 'text-zinc-100': showSettings }"
-        @click="settingsStore.displayUI = !showSettings">
+        @click="showSettings = !showSettings">
         settings
       </button>
     </div>
