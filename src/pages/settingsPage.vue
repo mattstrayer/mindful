@@ -20,6 +20,8 @@ const tasksStore = useTasks()
       yesterday's tasks
     </h1>
 
+    <!-- TODO: the click action on a list item here should be to reset the task to today -->
+
     <TaskListItem
       v-for="task of tasksStore.yesterdaysIncompleteTasks"
       :key="task.id"
