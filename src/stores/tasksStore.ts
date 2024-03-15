@@ -47,10 +47,12 @@ export const useTasks = defineStore("tasks", {
     yesterdaysIncompleteTasks: (state) => {
       const yesterday = subDays(new Date(), 1)
 
-      return Object.values(state.tasks).filter((task) => {
-        const createdAt = new Date(task.createdAt!)
-        return differenceInDays(yesterday, createdAt) === 0
-      }).filter((task) => !task.completed)
+      return Object.values(state.tasks)
+        .filter((task) => {
+          const createdAt = new Date(task.createdAt!)
+          return differenceInDays(yesterday, createdAt) === 0
+        })
+        .filter((task) => !task.completed)
     },
 
     find: (state) => {
