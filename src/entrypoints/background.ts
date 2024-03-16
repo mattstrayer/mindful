@@ -19,7 +19,14 @@ export default defineBackground(() => {
     // no special logic to look at the tabId needed here. The bg worker will always respond to messages
     switch (message.type) {
       case MessageTypes.blockEnabled:
+
         workerStore.blockingEnabled.value = message.data
+
+        if(message.data) {
+          TabObserverService.findAndBlockTabs()
+        } else {
+          TabObserverService.restoreAllTabs()
+        }
         break
     }
 

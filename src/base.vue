@@ -85,7 +85,6 @@ onMounted(() => {
 
       <button
       class="btn btn-primary"
-
         :class="{ 'text-zinc-100': showSettings }"
         @click="TabObserverService.restoreAllTabs()">
         let them eat cake
