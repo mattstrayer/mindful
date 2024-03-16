@@ -12,6 +12,7 @@ import SettingsPage from "./pages/settingsPage.vue"
 import { useSettings } from "./settings"
 import { useIntentions } from "./stores/intentionsStore"
 import { useTasks } from "./stores/tasksStore"
+import TabObserverService from "./services/tabObserverService"
 
 const settingsStore = useSettings()
 const tasksStore = useTasks()
@@ -70,9 +71,25 @@ onMounted(() => {
         @click="showSettings = !showSettings">
         settings
       </button>
+
     </div>
 
     <div class="container flex flex-col justify-center max-w-[600px] mx-auto">
+
+      <button
+        :class="{ 'text-zinc-100': showSettings }"
+        class="btn btn-primary"
+        @click="TabObserverService.findAndBlockTabs()">
+        block them
+      </button>
+
+      <button
+      class="btn btn-primary"
+
+        :class="{ 'text-zinc-100': showSettings }"
+        @click="TabObserverService.restoreAllTabs()">
+        let them eat cake
+      </button>
       <SettingsPage v-if="showSettings" />
       <div v-else>
         <h1

@@ -35,33 +35,50 @@ export default class TabObserverService {
   //  to be called when the user enables blocking.
   //  this will find all existing tabs that meet the blockable criteria
   // and redirect them
-  static findAndBlockTabs() {
-    // query for all tabs
-    // for each
-    // DomainBlockingService.shouldBlockDomain(tab.url)
-    // if true,
-    // blockTab(tab.id, tab.url)
+  static async findAndBlockTabs() {
+    const tabs = await this.allTabs()
+
+    return Promise.allSettled(
+      tabs.map((tab) => {
+        if (!tab.url) return
+
+        const shouldBlock = DomainBlockingService.shouldBlockDomain(tab?.url)
+
+        if (shouldBlock && tab.id) {
+          this.blockTab(tab.id, tab.url)
+        }
+      })
+    )
   }
 
-  static restoreAllTabs() {
-    // query for all tabs
-    // for each
-    // see which tabs match the browser.runtime.getURL("newtab.html") pattern
-    // for those tabs -> restoreTab(tab.id)
+  static async restoreAllTabs() {
+    const tabs = await this.allTabs()
+
+    return Promise.allSettled(
+      tabs.map((tab) => {
+        if (!tab.url) return
+
+        if (tab.id) {
+          this.restoreTab(tab.id, tab.url)
+        }
+      })
+    )
   }
 
-  private static async restoreTab(tabId: number) {
-    // get tab info from tab id
-    const tab = await browser.tabs.get(tabId)
-
-    const newUrl = atob(tab!.url!.split("?url=")[1])
-
-    browser.tabs.update(tabId, {
-      url: newUrl
-    })
+  private static async allTabs() {
+    return browser.tabs.query({})
   }
 
-  private static blockTab(tabId: number, previousUrl: string) {
+  private static async restoreTab(tabId: number, previousUrl: string) {
+    const newUrl = atob(previousUrl.split("?url=")[1])
+
+    return this.redirectTab(tabId, newUrl)
+  }
+
+  private static blockTab(
+    tabId: number,
+    previousUrl: string
+  ): Promise<Tabs.Tab> {
     let blockedUrl = `${browser.runtime.getURL("newtab.html")}`
 
     if (previousUrl) {
@@ -69,8 +86,11 @@ export default class TabObserverService {
       blockedUrl = `${blockedUrl}?url=${b64Url}`
     }
 
-    browser.tabs.update(tabId, {
-      url: blockedUrl
+    return this.redirectTab(tabId, blockedUrl)
+  }
+  private static redirectTab(tabId: number, url: string) {
+    return browser.tabs.update(tabId, {
+      url
     })
   }
 }
