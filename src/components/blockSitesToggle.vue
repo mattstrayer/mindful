@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useSettings } from "@/settings"
+  import { useSettings } from "@/settings";
 
-const settingsStore = useSettings()
+  const settingsStore = useSettings();
 </script>
 
 <template>
@@ -13,7 +13,8 @@ const settingsStore = useSettings()
           type="checkbox"
           class="toggle toggle-primary"
           :checked="settingsStore.blockingEnabled"
-          @change="settingsStore.toggleBlocking()" />
+          @change="settingsStore.toggleBlocking()"
+        />
       </label>
     </div>
   </div>

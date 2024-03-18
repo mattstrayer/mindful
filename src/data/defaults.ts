@@ -15,5 +15,5 @@ export const blockedDomains = [
   "hulu.com",
   "imgur.com",
   "theonion.com",
-  "break.com"
-]
+  "break.com",
+];

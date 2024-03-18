@@ -1,28 +1,28 @@
-import { Task } from "@/models"
+import { Task } from "@/models";
 
 export enum BroadcastChannels {
-  default = "mindful"
+  default = "mindful",
 }
 
-export type MessageHandler = (message: Message) => void
+export type MessageHandler = (message: Message) => void;
 
 export enum MessageTypes {
   blockEnabled = "BLOCK_ENABLED",
-  savedTask = "SAVED_TASK"
+  savedTask = "SAVED_TASK",
 }
 
 export interface Message {
-  type: MessageTypes
-  data: any
-  tabId: number
+  type: MessageTypes;
+  data: any;
+  tabId: number;
 }
 
 export interface BlockEnabledMessage extends Message {
-  type: MessageTypes.blockEnabled
-  data: boolean
+  type: MessageTypes.blockEnabled;
+  data: boolean;
 }
 
 export interface SavedTaskMessage extends Message {
-  type: MessageTypes.savedTask
-  data: Task
+  type: MessageTypes.savedTask;
+  data: Task;
 }

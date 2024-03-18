@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BlockSitesToggle from "@/components/blockSitesToggle.vue"
+  import BlockSitesToggle from "@/components/blockSitesToggle.vue";
 </script>
 
 <template>
@@ -9,13 +9,13 @@ import BlockSitesToggle from "@/components/blockSitesToggle.vue"
 </template>
 
 <style>
-#popup {
-  min-width: 470px;
-  height: 100%;
+  #popup {
+    min-width: 470px;
+    height: 100%;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 47px;
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 47px;
+  }
 </style>

@@ -8,15 +8,15 @@ export default class JsonParserService {
     return items.map((item) => {
       Object.keys(item).forEach((key) => {
         if (dateKeys.includes(key)) {
-          item[key] = this.stringToDate(item[key])
+          item[key] = this.stringToDate(item[key]);
         }
-      })
+      });
 
-      return item
-    })
+      return item;
+    });
   }
 
   private static stringToDate(value: string): Date {
-    return new Date(value)
+    return new Date(value);
   }
 }

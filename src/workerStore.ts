@@ -1,8 +1,8 @@
-import { createGlobalState } from "@vueuse/core"
-import { ref } from "vue"
+import { createGlobalState } from "@vueuse/core";
+import { ref } from "vue";
 
 export const useWorkerStore = createGlobalState(() => {
-  const blockingEnabled = ref(false)
+  const blockingEnabled = ref(false);
 
-  return { blockingEnabled }
-})
+  return { blockingEnabled };
+});

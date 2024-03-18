@@ -1,33 +1,27 @@
 // import { useStore } from "@/store"
 
-import { useWorkerStore } from "@/workerStore"
-import type { Tabs } from "webextension-polyfill"
+import { useWorkerStore } from "@/workerStore";
+import type { Tabs } from "webextension-polyfill";
 
-import DomainBlockingService from "./domainBlockingService"
+import DomainBlockingService from "./domainBlockingService";
 
-const workerStore = useWorkerStore()
+const workerStore = useWorkerStore();
 
 export default class TabObserverService {
-  static updateTabHandler(
-    tabId: number,
-    changeInfo: Tabs.OnUpdatedChangeInfoType,
-    _tab: Tabs.Tab
-  ) {
-    if (!workerStore.blockingEnabled.value) return
+  static updateTabHandler(tabId: number, changeInfo: Tabs.OnUpdatedChangeInfoType, _tab: Tabs.Tab) {
+    if (!workerStore.blockingEnabled.value) return;
 
     if (changeInfo.url) {
-      if (changeInfo.url.startsWith(browser.runtime.getURL(""))) return
+      if (changeInfo.url.startsWith(browser.runtime.getURL(""))) return;
 
-      if (changeInfo.url.startsWith("chrome://")) return
+      if (changeInfo.url.startsWith("chrome://")) return;
 
-      const shouldBlock = DomainBlockingService.shouldBlockDomain(
-        changeInfo.url
-      )
+      const shouldBlock = DomainBlockingService.shouldBlockDomain(changeInfo.url);
 
       // need to save this enttity in the store
       // store id, blocked url (for categorizing?) , and base64 url
       if (shouldBlock) {
-        this.blockTab(tabId, changeInfo.url)
+        this.blockTab(tabId, changeInfo.url);
       }
     }
   }
@@ -36,61 +30,58 @@ export default class TabObserverService {
   //  this will find all existing tabs that meet the blockable criteria
   // and redirect them
   static async findAndBlockTabs() {
-    const tabs = await this.allTabs()
+    const tabs = await this.allTabs();
 
     return Promise.allSettled(
       tabs.map((tab) => {
-        if (!tab.url) return
+        if (!tab.url) return;
 
-        const shouldBlock = DomainBlockingService.shouldBlockDomain(tab?.url)
+        const shouldBlock = DomainBlockingService.shouldBlockDomain(tab?.url);
 
         if (shouldBlock && tab.id) {
-          this.blockTab(tab.id, tab.url)
+          this.blockTab(tab.id, tab.url);
         }
-      })
-    )
+      }),
+    );
   }
 
   static async restoreAllTabs() {
-    const tabs = await this.allTabs()
+    const tabs = await this.allTabs();
 
     return Promise.allSettled(
       tabs.map((tab) => {
-        if (!tab.url) return
+        if (!tab.url) return;
 
         if (tab.id) {
-          this.restoreTab(tab.id, tab.url)
+          this.restoreTab(tab.id, tab.url);
         }
-      })
-    )
+      }),
+    );
   }
 
   private static async allTabs() {
-    return browser.tabs.query({})
+    return browser.tabs.query({});
   }
 
   private static async restoreTab(tabId: number, previousUrl: string) {
-    const newUrl = atob(previousUrl.split("?url=")[1])
+    const newUrl = atob(previousUrl.split("?url=")[1]);
 
-    return this.redirectTab(tabId, newUrl)
+    return this.redirectTab(tabId, newUrl);
   }
 
-  private static blockTab(
-    tabId: number,
-    previousUrl: string
-  ): Promise<Tabs.Tab> {
-    let blockedUrl = `${browser.runtime.getURL("newtab.html")}`
+  private static blockTab(tabId: number, previousUrl: string): Promise<Tabs.Tab> {
+    let blockedUrl = `${browser.runtime.getURL("newtab.html")}`;
 
     if (previousUrl) {
-      const b64Url = btoa(previousUrl)
-      blockedUrl = `${blockedUrl}?url=${b64Url}`
+      const b64Url = btoa(previousUrl);
+      blockedUrl = `${blockedUrl}?url=${b64Url}`;
     }
 
-    return this.redirectTab(tabId, blockedUrl)
+    return this.redirectTab(tabId, blockedUrl);
   }
   private static redirectTab(tabId: number, url: string) {
     return browser.tabs.update(tabId, {
-      url
-    })
+      url,
+    });
   }
 }

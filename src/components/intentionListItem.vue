@@ -1,41 +1,40 @@
 <script setup lang="ts">
-import { Intention } from "@/data/types"
-import { useIntentions } from "@/stores/intentionsStore"
-import { ref } from "vue"
+  import { Intention } from "@/data/types";
+  import { useIntentions } from "@/stores/intentionsStore";
+  import { ref } from "vue";
 
-import GradientBorder from "./gradientBorder.vue"
+  import GradientBorder from "./gradientBorder.vue";
 
-const props = defineProps<{
-  intention: Intention
-}>()
+  const props = defineProps<{
+    intention: Intention;
+  }>();
 
-const showConfirmation = ref(false)
+  const showConfirmation = ref(false);
 
-function didRemove() {
-  if (showConfirmation.value === true) {
-    const intentionsStore = useIntentions()
-    intentionsStore.removeIntention(props.intention?.name)
+  function didRemove() {
+    if (showConfirmation.value === true) {
+      const intentionsStore = useIntentions();
+      intentionsStore.removeIntention(props.intention?.name);
 
-    showConfirmation.value = false
-  } else {
-    showConfirmation.value = true
+      showConfirmation.value = false;
+    } else {
+      showConfirmation.value = true;
+    }
   }
-}
 </script>
 
 <template>
   <div class="flex flex-col w-full">
     <div class="flex justify-between items-center flex-row">
-      <h1
-        class="flex flex-col leading-[3rem] text-base"
-        v-text="intention?.name" />
+      <h1 class="flex flex-col leading-[3rem] text-base" v-text="intention?.name" />
       <button
         class="btn btn-sm flex flex-col"
         :class="{
           'btn-square': !showConfirmation,
-          'btn-error': showConfirmation
+          'btn-error': showConfirmation,
         }"
-        @click="didRemove">
+        @click="didRemove"
+      >
         <span v-if="showConfirmation">confirm?</span>
         <svg
           v-else
@@ -43,12 +42,14 @@ function didRemove() {
           class="h-6 w-6"
           fill="none"
           viewBox="0 0 24 24"
-          stroke="currentColor">
+          stroke="currentColor"
+        >
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
             stroke-width="2"
-            d="M6 18L18 6M6 6l12 12" />
+            d="M6 18L18 6M6 6l12 12"
+          />
         </svg>
       </button>
     </div>

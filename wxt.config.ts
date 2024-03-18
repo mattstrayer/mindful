@@ -1,5 +1,5 @@
-import vue from "@vitejs/plugin-vue"
-import { defineConfig } from "wxt"
+import vue from "@vitejs/plugin-vue";
+import { defineConfig } from "wxt";
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
@@ -8,16 +8,16 @@ export default defineConfig({
   manifest: {
     name: "mindful",
     description: "mindful app",
-    permissions: ["tabs", "storage", "webRequest", "webNavigation"]
+    permissions: ["tabs", "storage", "webRequest", "webNavigation"],
   },
 
   imports: {
     addons: {
-      vueTemplate: true
+      vueTemplate: true,
     },
-    presets: ["vue"]
+    presets: ["vue"],
   },
   vite: () => ({
-    plugins: [vue()]
-  })
-})
+    plugins: [vue()],
+  }),
+});

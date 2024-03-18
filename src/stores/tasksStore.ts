@@ -1,14 +1,10 @@
-import { useTabInfoStore } from "@/data/tabInfoStore"
-import type { Task } from "@/data/types"
-import { generateUid } from "@/helpers"
-import {
-  BroadcastChannels,
-  MessageTypes,
-  SavedTaskMessage
-} from "@/messaging/types"
-import { BroadcastChannel } from "broadcast-channel"
-import { differenceInDays, subDays } from "date-fns"
-import { defineStore } from "pinia"
+import { useTabInfoStore } from "@/data/tabInfoStore";
+import type { Task } from "@/data/types";
+import { generateUid } from "@/helpers";
+import { BroadcastChannels, MessageTypes, SavedTaskMessage } from "@/messaging/types";
+import { BroadcastChannel } from "broadcast-channel";
+import { differenceInDays, subDays } from "date-fns";
+import { defineStore } from "pinia";
 
 // All interactions with the settings will be done via actions, so that we can dispatch
 // a broadcast-channel message to the worker
@@ -17,90 +13,88 @@ export const useTasks = defineStore("tasks", {
   persist: true,
   state: () => {
     return {
-      tasks: {} as Record<string, Task>
-    }
+      tasks: {} as Record<string, Task>,
+    };
   },
 
   getters: {
     todaysTasks: (state) => {
-      const today = new Date()
+      const today = new Date();
 
       return Object.values(state.tasks)
         .filter((task) => {
-          const createdAt = new Date(task.createdAt!)
+          const createdAt = new Date(task.createdAt!);
 
-          return differenceInDays(today, createdAt) === 0
+          return differenceInDays(today, createdAt) === 0;
         })
         .sort((a: Task, b: Task) => {
           if (a.completed && b.completed) {
-            return 0
+            return 0;
           }
           if (a.completed) {
-            return 1
+            return 1;
           }
           if (b.completed) {
-            return -1
+            return -1;
           }
-          return 0
-        })
+          return 0;
+        });
     },
     yesterdaysIncompleteTasks: (state) => {
-      const yesterday = subDays(new Date(), 1)
+      const yesterday = subDays(new Date(), 1);
 
       return Object.values(state.tasks)
         .filter((task) => {
-          const createdAt = new Date(task.createdAt!)
-          return differenceInDays(yesterday, createdAt) === 0
+          const createdAt = new Date(task.createdAt!);
+          return differenceInDays(yesterday, createdAt) === 0;
         })
-        .filter((task) => !task.completed)
+        .filter((task) => !task.completed);
     },
 
     find: (state) => {
       return (id: string) => {
-        return state.tasks[id]
-      }
-    }
+        return state.tasks[id];
+      };
+    },
   },
   actions: {
     async addTask(name: string, completed: boolean = false) {
-      const tabInfo = await useTabInfoStore()
+      const tabInfo = await useTabInfoStore();
 
-      const task = {} as Task
-      task.id = generateUid()
-      task.name = name
-      task.completed = completed
-      task.createdAt = new Date()
+      const task = {} as Task;
+      task.id = generateUid();
+      task.name = name;
+      task.completed = completed;
+      task.createdAt = new Date();
 
-      this.tasks[task.id] = task
+      this.tasks[task.id] = task;
 
-      new BroadcastChannel<SavedTaskMessage>(
-        BroadcastChannels.default
-      ).postMessage({
+      new BroadcastChannel<SavedTaskMessage>(BroadcastChannels.default).postMessage({
         tabId: tabInfo.tab?.id as number,
         type: MessageTypes.savedTask,
-        data: task
-      })
+        data: task,
+      });
     },
 
     async resetTask(task: Task) {
-      task.completed = false
-      task.completedAt = undefined
-      task.createdAt = new Date()
-      this.tasks[task.id] = task
+      task.completed = false;
+      task.completedAt = undefined;
+      task.createdAt = new Date();
+      this.tasks[task.id] = task;
     },
 
     async saveTask(task: Task) {
-      this.tasks[task.id] = task
+      this.tasks[task.id] = task;
     },
 
     async cleanupOldTasks() {
-      const CUTOFF = 2 // days
+      const CUTOFF = 2; // days
 
       Object.values(this.tasks).forEach((task) => {
         if (differenceInDays(new Date(), task.createdAt!) > CUTOFF) {
-          delete this.tasks[task.id]
+          delete this.tasks[task.id];
         }
-      })
-    }
-  }
-})
+      });
+    },
+  },
+});

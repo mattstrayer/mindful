@@ -1,9 +1,9 @@
 // import { useTabInfoStore } from "@/data/tabInfoStore"
-import type { Intention } from "@/data/types"
-import { generateUid } from "@/helpers"
+import type { Intention } from "@/data/types";
+import { generateUid } from "@/helpers";
 // import { SavedTaskMessage } from "@/messaging/types"
 // import { BroadcastChannel } from "broadcast-channel"
-import { defineStore } from "pinia"
+import { defineStore } from "pinia";
 
 // import { BroadcastChannels, MessageTypes } from "@/messaging/types"
 
@@ -14,8 +14,8 @@ export const useIntentions = defineStore("intentions", {
   persist: true,
   state: () => {
     return {
-      intentions: [] as Array<Intention>
-    }
+      intentions: [] as Array<Intention>,
+    };
   },
 
   getters: {},
@@ -23,11 +23,11 @@ export const useIntentions = defineStore("intentions", {
     addIntention(name: string) {
       // const tabInfo = await useTabInfoStore()
 
-      const intention = {} as Intention
-      intention.id = generateUid()
-      intention.name = name
+      const intention = {} as Intention;
+      intention.id = generateUid();
+      intention.name = name;
 
-      this.intentions.push(intention)
+      this.intentions.push(intention);
 
       // new BroadcastChannel<SavedTaskMessage>(
       //   BroadcastChannels.default
@@ -39,11 +39,9 @@ export const useIntentions = defineStore("intentions", {
     },
 
     removeIntention(name: string) {
-      const index = this.intentions.findIndex(
-        (intention) => intention.name === name
-      )
+      const index = this.intentions.findIndex((intention) => intention.name === name);
       if (index > -1) {
-        this.intentions.splice(index, 1)
+        this.intentions.splice(index, 1);
       }
 
       // new BroadcastChannel<SavedTaskMessage>(
@@ -53,6 +51,6 @@ export const useIntentions = defineStore("intentions", {
       //   type: MessageTypes.savedTask,
       //   data: task
       // })
-    }
-  }
-})
+    },
+  },
+});

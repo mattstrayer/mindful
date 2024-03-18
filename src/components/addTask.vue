@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { useTasks } from "@/stores/tasksStore"
-import { ref } from "vue"
+  import { useTasks } from "@/stores/tasksStore";
+  import { ref } from "vue";
 
-const input = ref("")
+  const input = ref("");
 
-function didAddTask() {
-  if (!input.value) return
-  const tasksStore = useTasks()
+  function didAddTask() {
+    if (!input.value) return;
+    const tasksStore = useTasks();
 
-  tasksStore.addTask(input.value)
+    tasksStore.addTask(input.value);
 
-  input.value = ""
-}
+    input.value = "";
+  }
 </script>
 
 <template>
@@ -21,7 +21,8 @@ function didAddTask() {
       type="text"
       placeholder="I want to..."
       class="input input-bordered join-item w-full"
-      @keyup.enter="didAddTask" />
+      @keyup.enter="didAddTask"
+    />
     <button class="btn btn-primary join-item" @click="didAddTask">add</button>
   </div>
 </template>

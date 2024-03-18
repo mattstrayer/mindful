@@ -1,2 +1,2 @@
-type UUID = string
-type Datelike = Date | string | null
+type UUID = string;
+type Datelike = Date | string | null;
