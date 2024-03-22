@@ -11,3 +11,8 @@ export interface Intention {
   name: string;
   completed: boolean;
 }
+
+export interface Domain {
+  id: string;
+  url: string;
+}

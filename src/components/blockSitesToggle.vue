@@ -5,17 +5,19 @@
 </script>
 
 <template>
-  <div class="w-full text-right text-zinc-500 pr-4 mt-4 text-xl">
+  <div class="w-full text-center">
     <div class="form-control">
-      <label class="label cursor-pointer">
-        <span class="label-text">Block Distracting Sites</span>
-        <input
-          type="checkbox"
-          class="toggle toggle-primary"
-          :checked="settingsStore.blockingEnabled"
-          @change="settingsStore.toggleBlocking()"
-        />
+      <label class="label">
+        <span class="text-zinc-300 text-xl font-extrabold mb-4 line leading-snug"
+          >Block Distracting Sites</span
+        >
       </label>
+      <input
+        type="checkbox"
+        class="toggle toggle-primary mx-auto"
+        :checked="settingsStore.blockingEnabled"
+        @change="settingsStore.toggleBlocking()"
+      />
     </div>
   </div>
 </template>

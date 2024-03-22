@@ -3,16 +3,15 @@
 </script>
 
 <template>
-  <div id="popup">
+  <div id="popup" class="p-4">
     <BlockSitesToggle />
   </div>
 </template>
 
 <style>
   #popup {
-    min-width: 470px;
+    width: 100%;
     height: 100%;
-
     display: flex;
     align-items: center;
     justify-content: center;
