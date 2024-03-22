@@ -14,7 +14,7 @@ export const useDomains = defineStore("domains", {
 
   getters: {},
   actions: {
-    addDomain(url: string) {
+    add(url: string) {
       const domain = {} as Domain;
       domain.id = generateUid();
       domain.url = url;
@@ -22,7 +22,7 @@ export const useDomains = defineStore("domains", {
       this.domains.push(domain);
     },
 
-    removeDomain(id: string) {
+    remove(id: string) {
       const index = this.domains.findIndex((domain) => domain.id === id);
       if (index > -1) {
         this.domains.splice(index, 1);

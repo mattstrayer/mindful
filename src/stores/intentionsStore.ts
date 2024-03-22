@@ -20,7 +20,7 @@ export const useIntentions = defineStore("intentions", {
 
   getters: {},
   actions: {
-    addIntention(name: string) {
+    add(name: string) {
       // const tabInfo = await useTabInfoStore()
 
       const intention = {} as Intention;
@@ -38,8 +38,8 @@ export const useIntentions = defineStore("intentions", {
       // })
     },
 
-    removeIntention(name: string) {
-      const index = this.intentions.findIndex((intention) => intention.name === name);
+    remove(id: string) {
+      const index = this.intentions.findIndex((intention) => intention.id === id);
       if (index > -1) {
         this.intentions.splice(index, 1);
       }

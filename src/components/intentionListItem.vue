@@ -14,7 +14,7 @@
   function didRemove() {
     if (showConfirmation.value === true) {
       const intentionsStore = useIntentions();
-      intentionsStore.removeIntention(props.intention?.name);
+      intentionsStore.remove(props.intention?.id);
 
       showConfirmation.value = false;
     } else {

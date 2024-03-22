@@ -9,7 +9,7 @@
 
     const intentionsStore = useIntentions();
 
-    intentionsStore.addIntention(input.value);
+    intentionsStore.add(input.value);
 
     input.value = "";
   }

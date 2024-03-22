@@ -58,7 +58,7 @@ export const useTasks = defineStore("tasks", {
     },
   },
   actions: {
-    async addTask(name: string, completed: boolean = false) {
+    async add(name: string, completed: boolean = false) {
       const tabInfo = await useTabInfoStore();
 
       const task = {} as Task;
@@ -76,14 +76,14 @@ export const useTasks = defineStore("tasks", {
       });
     },
 
-    async resetTask(task: Task) {
+    async reset(task: Task) {
       task.completed = false;
       task.completedAt = undefined;
       task.createdAt = new Date();
       this.tasks[task.id] = task;
     },
 
-    async saveTask(task: Task) {
+    async save(task: Task) {
       this.tasks[task.id] = task;
     },
 

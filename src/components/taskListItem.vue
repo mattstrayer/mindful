@@ -20,7 +20,7 @@
       task.completedAt = new Date();
     }
 
-    useTasks().saveTask(task);
+    useTasks().save(task);
   };
 </script>
 
