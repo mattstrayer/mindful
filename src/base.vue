@@ -12,6 +12,7 @@
   import { useSettings } from "./settings";
   import { useIntentions } from "./stores/intentionsStore";
   import { useTasks } from "./stores/tasksStore";
+  import { useDomains } from "./stores/domainsStore";
 
   const settingsStore = useSettings();
   const tasksStore = useTasks();
@@ -39,7 +40,14 @@
     }
   }
 
-  onMounted(() => {
+  onMounted(async () => {
+    const domainsStore = useDomains();
+    if (!domainsStore.blocklist.length) {
+      await Promise.allSettled(
+        domainsStore.defaultDomains.map((domain) => domainsStore.add(domain)),
+      );
+    }
+
     fetchNewIntention();
 
     // cleanup on startup

@@ -14,5 +14,5 @@ export interface Intention {
 
 export interface Domain {
   id: string;
-  url: string;
+  domain: string;
 }

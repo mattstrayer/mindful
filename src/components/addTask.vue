@@ -8,7 +8,7 @@
     if (!input.value) return;
     const tasksStore = useTasks();
 
-    tasksStore.addTask(input.value);
+    tasksStore.add(input.value);
 
     input.value = "";
   }

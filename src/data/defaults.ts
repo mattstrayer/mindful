@@ -1,4 +1,4 @@
-export const blockedDomains = [
+export const defaultDomainList = [
   "reddit.com",
   "youtube.com",
   "twitter.com",

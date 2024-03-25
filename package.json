@@ -56,7 +56,7 @@
     "typescript": "5.4.2",
     "typescript-eslint": "7.2.0",
     "vue-tsc": "2.0.6",
-    "wxt": "0.17.7"
+    "wxt": "0.17.8"
   },
   "manifest": {
     "permissions": [

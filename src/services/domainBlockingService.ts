@@ -1,13 +1,13 @@
-import { blockedDomains } from "../data/defaults";
+import { useDomains } from "@/workerStore";
 
 export default class DomainBlockingService {
-  static blockedDomains = blockedDomains; // This will load from the DomainsRepository when it gets created
+  static store = useDomains();
 
   static shouldBlockDomain(domain: string): boolean {
     const parsedDomain = this.parseDomain(domain);
 
-    return this.blockedDomains.some((blockedDomain) => {
-      return parsedDomain.includes(blockedDomain);
+    return this.store.blocklist.value.some((blockedDomain) => {
+      return parsedDomain.includes(blockedDomain.domain);
     });
   }
 

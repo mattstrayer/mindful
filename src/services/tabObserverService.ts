@@ -1,15 +1,15 @@
 // import { useStore } from "@/store"
 
-import { useWorkerStore } from "@/workerStore";
+import { useDomains } from "@/workerStore";
 import type { Tabs } from "webextension-polyfill";
 
 import DomainBlockingService from "./domainBlockingService";
 
-const workerStore = useWorkerStore();
+const store = useDomains();
 
 export default class TabObserverService {
   static updateTabHandler(tabId: number, changeInfo: Tabs.OnUpdatedChangeInfoType, _tab: Tabs.Tab) {
-    if (!workerStore.blockingEnabled.value) return;
+    if (!store.blockingEnabled.value) return;
 
     if (changeInfo.url) {
       if (changeInfo.url.startsWith(browser.runtime.getURL(""))) return;
@@ -17,6 +17,7 @@ export default class TabObserverService {
       if (changeInfo.url.startsWith("chrome://")) return;
 
       const shouldBlock = DomainBlockingService.shouldBlockDomain(changeInfo.url);
+      console.log(shouldBlock + `${changeInfo.url}`);
 
       // need to save this enttity in the store
       // store id, blocked url (for categorizing?) , and base64 url

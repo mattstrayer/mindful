@@ -2,6 +2,8 @@
   import BlockSitesToggle from "@/components/blockSitesToggle.vue";
   import IntentionsList from "@/components/intentionsList.vue";
   import TaskListItem from "@/components/taskListItem.vue";
+
+  import DomainList from "@/components/domainList.vue";
   import { useTasks } from "@/stores/tasksStore";
 
   const tasksStore = useTasks();
@@ -25,6 +27,8 @@
       :key="task.id"
       :task="task"
     />
+
+    <DomainList />
 
     <BlockSitesToggle />
   </div>
