@@ -5,7 +5,7 @@ import { BroadcastChannel } from "broadcast-channel";
 import { generateUid } from "@/helpers";
 
 import { defineStore } from "pinia";
-import {  BroadcastChannels, MessageTypes } from "@/messaging/types";
+import { BroadcastChannels, MessageTypes } from "@/messaging/types";
 
 export const useDomains = (shouldPersist = false) => {
   return defineStore("domains", async () => {

@@ -1,17 +1,14 @@
 import { createGlobalState } from "@vueuse/core";
 import type { Domain } from "@/data/types";
 import { generateUid } from "./helpers";
-import { BroadcastChannels, DomainsUpdatedMessage,  Stores } from "./messaging/types";
+import { BroadcastChannels, DomainsUpdatedMessage, Stores } from "./messaging/types";
 import { BroadcastChannel } from "broadcast-channel";
 
 import { defaultDomainList } from "@/data/defaults";
 
-
 // create a composable that gets called and deconstrcuted inside of this global state
 
-
 const useDomainsState = () => {
-
   // State
   const blocklist = ref([] as Array<Domain>);
   const blockingEnabled = ref(false);
@@ -19,21 +16,17 @@ const useDomainsState = () => {
 
   // Getters
 
-    return {
-      blocklist,
-      blockingEnabled,
-      defaultDomains,
-    }
-
-}
-
+  return {
+    blocklist,
+    blockingEnabled,
+    defaultDomains,
+  };
+};
 
 export const useDomains = createGlobalState(() => {
   const storageKey = "domains";
 
-  const { defaultDomains, blocklist, blockingEnabled } = useDomainsState()
-
-
+  const { defaultDomains, blocklist, blockingEnabled } = useDomainsState();
 
   // Helpers
 
@@ -47,12 +40,12 @@ export const useDomains = createGlobalState(() => {
   }
 
   async function persistAndNotify() {
-    await persist()
+    await persist();
 
     await new BroadcastChannel<DomainsUpdatedMessage>(BroadcastChannels.default).postMessage({
       store: Stores.Domains,
-      data: {blocklist: toRaw(blocklist.value), blockingEnabled: toRaw(blockingEnabled.value)},
-    })
+      data: { blocklist: toRaw(blocklist.value), blockingEnabled: toRaw(blockingEnabled.value) },
+    });
   }
 
   // Actions
@@ -71,10 +64,8 @@ export const useDomains = createGlobalState(() => {
     if (index > -1) {
       blocklist.value.splice(index, 1);
     }
-    persistAndNotify()
+    persistAndNotify();
   }
-
-
 
   return {
     defaultDomains,

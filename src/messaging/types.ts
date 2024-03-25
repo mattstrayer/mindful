@@ -4,31 +4,26 @@ export enum BroadcastChannels {
   default = "mindful",
 }
 
-
-
 export type MessageHandler = (message: Message) => void;
-
 
 export enum Stores {
   Domains,
   Tasks,
-  Intentions
+  Intentions,
 }
 export interface StoreUpdateMessage {
-  store: Stores
-  data: any
-  sourceTabId?: number
+  store: Stores;
+  data: any;
+  sourceTabId?: number;
 }
 
 export interface DomainsUpdatedMessage {
-  store: Stores.Domains
+  store: Stores.Domains;
   data: {
-    blocklist: Array<Domain>
-    blockingEnabled: boolean
-  }
+    blocklist: Array<Domain>;
+    blockingEnabled: boolean;
+  };
 }
-
-
 
 export enum MessageTypes {
   blockEnabled = "BLOCK_ENABLED",
@@ -46,7 +41,6 @@ export interface BlockEnabledMessage extends Message {
   type: MessageTypes.blockEnabled;
   data: boolean;
 }
-
 
 export interface SavedTaskMessage extends Message {
   type: MessageTypes.savedTask;

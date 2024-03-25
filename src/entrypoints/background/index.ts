@@ -11,13 +11,11 @@ export default defineBackground(async () => {
 
   domainsStore.add("example.com");
 
-  const b = await browser.storage.local.get('domains')
-  console.log(b)
+  const b = await browser.storage.local.get("domains");
+  console.log(b);
 
   // Register Browser Event Listeners
   browser.tabs.onUpdated.addListener(TabObserverService.updateTabHandler);
-
-
 
   // Setup Broadcast Channel
   // const channel: BroadcastChannel<Message> = new BroadcastChannel(BroadcastChannels.default);
