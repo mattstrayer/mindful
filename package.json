@@ -34,7 +34,7 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "1.8.0",
     "@tailwindcss/typography": "0.5.10",
-    "@types/node": "20.11.26",
+    "@types/node": "20.11.30",
     "@vitejs/plugin-vue": "5.0.4",
     "@vue/eslint-config-prettier": "9.0.0",
     "@vue/eslint-config-typescript": "13.0.0",
@@ -72,7 +72,7 @@
     ]
   },
   "volta": {
-    "node": "20.11.1",
+    "node": "20.12.0",
     "npm": "10.5.0"
   }
 }
