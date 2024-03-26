@@ -1,4 +1,4 @@
-import { useDomains } from "@/workerStore";
+import { useDomains } from "@/stores/worker/domainsStore";
 
 export default class DomainBlockingService {
   static store = useDomains();

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { useDomains } from "@/stores/domainsStore";
+  import { useDomains } from "@/stores/local/domainsStore";
 
   import AddIntention from "./addIntention.vue";
   import IntentionListItem from "./intentionListItem.vue";
@@ -13,8 +13,8 @@
       <input type="checkbox" checked />
       <div class="collapse-title text-2xl font-medium text-zinc-100 text-center">blocked sites</div>
       <div class="collapse-content">
-        <div v-for="(domain, index) in store.blocklist" :key="index">
-          {{ domain.domain }}
+        <div v-for="(item, index) in store.blocklist.value" :key="index">
+          {{ item.domain }}
         </div>
         <!-- <AddIntention class="mb-4" />
         <IntentionListItem

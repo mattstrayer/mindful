@@ -1,6 +1,6 @@
 // import { useStore } from "@/store"
 
-import { useDomains } from "@/workerStore";
+import { useDomains } from "@/stores/worker/domainsStore";
 import type { Tabs } from "webextension-polyfill";
 
 import DomainBlockingService from "./domainBlockingService";

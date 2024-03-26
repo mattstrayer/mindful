@@ -9,12 +9,10 @@
   import TasksContainer from "./components/tasksContainer.vue";
   import { Intention } from "./data/types";
   import SettingsPage from "./pages/settingsPage.vue";
-  import { useSettings } from "./settings";
   import { useIntentions } from "./stores/intentionsStore";
   import { useTasks } from "./stores/tasksStore";
-  import { useDomains } from "./stores/domainsStore";
+  import { useDomains } from "@/stores/local/domainsStore";
 
-  const settingsStore = useSettings();
   const tasksStore = useTasks();
   const intentionsStore = useIntentions();
 
@@ -42,31 +40,14 @@
 
   onMounted(async () => {
     const domainsStore = useDomains();
-    if (!domainsStore.blocklist.length) {
-      await Promise.allSettled(
-        domainsStore.defaultDomains.map((domain) => domainsStore.add(domain)),
-      );
+    if (!domainsStore.blocklist.value.length) {
+      domainsStore.hydrateWithDefaultBlocklist();
     }
 
     fetchNewIntention();
 
     // cleanup on startup
-    tasksStore.cleanupOldTasks();
-
-    window.addEventListener("storage", () => {
-      // reload from localstorage
-      tasksStore.$hydrate();
-      intentionsStore.$hydrate();
-      settingsStore.$hydrate();
-    });
-
-    // document.addEventListener("visibilitychange", () => {
-    //   if (document.visibilityState === "visible") {
-    //     tasksStore.$hydrate()
-    //     intentionsStore.$hydrate()
-    //     settingsStore.$hydrate()
-    //   }
-    // })
+    // tasksStore.cleanupOldTasks();
   });
 </script>
 

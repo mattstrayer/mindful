@@ -4,7 +4,6 @@ import { generateUid } from "@/helpers";
 import { BroadcastChannels, MessageTypes, SavedTaskMessage } from "@/messaging/types";
 import { BroadcastChannel } from "broadcast-channel";
 import { differenceInDays, subDays } from "date-fns";
-import { defineStore } from "pinia";
 
 // All interactions with the settings will be done via actions, so that we can dispatch
 // a broadcast-channel message to the worker

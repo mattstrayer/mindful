@@ -1,7 +1,8 @@
 import type { Domain, Task } from "@/data/types";
 
 export enum BroadcastChannels {
-  default = "mindful",
+  publish = "publish",
+  consume = "consume",
 }
 
 export type MessageHandler = (message: Message) => void;
@@ -26,9 +27,7 @@ export interface DomainsUpdatedMessage {
 }
 
 export enum MessageTypes {
-  blockEnabled = "BLOCK_ENABLED",
-  savedTask = "SAVED_TASK",
-  domainsUpdated = "DOMAINS_UPDATED",
+  storeUpdated = "STORE_UPDATED",
 }
 
 export interface Message {

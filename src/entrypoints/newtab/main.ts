@@ -5,12 +5,9 @@ import "@/index.css";
 import { useTabInfoStore } from "@/data/tabInfoStore";
 import { BroadcastChannels, Message, MessageTypes } from "@/messaging/types";
 import { BroadcastChannel } from "broadcast-channel";
-import { createPinia } from "pinia";
-import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 
 import App from "./App.vue";
 
-const pinia = createPinia().use(piniaPluginPersistedstate);
 
 const channel: BroadcastChannel<Message> = new BroadcastChannel(BroadcastChannels.default);
 
@@ -25,7 +22,7 @@ channel.onmessage = async (message) => {
   }
 
   switch (message.type) {
-    case MessageTypes.savedTask: {
+    case MessageTypes.domainsUpdated: {
       // only want to run this without posting a new message.
       // await useRepo(TaskRepository).save(message.data)
       break;
@@ -34,4 +31,4 @@ channel.onmessage = async (message) => {
   console.log(message.type, message.data);
 };
 
-createApp(App).use(pinia).mount("#app");
+createApp(App).mount("#app");

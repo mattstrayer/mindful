@@ -1,32 +1,29 @@
 import { createGlobalState } from "@vueuse/core";
 import type { Domain } from "@/data/types";
-import { generateUid } from "./helpers";
-import { BroadcastChannels, DomainsUpdatedMessage, Stores } from "./messaging/types";
+import { generateUid } from "@/helpers";
+import { BroadcastChannels, DomainsUpdatedMessage, Stores } from "@/messaging/types";
 import { BroadcastChannel } from "broadcast-channel";
+import { useDomainsState } from "../states";
 
-import { defaultDomainList } from "@/data/defaults";
 
-// create a composable that gets called and deconstrcuted inside of this global state
-
-const useDomainsState = () => {
-  // State
-  const blocklist = ref([] as Array<Domain>);
-  const blockingEnabled = ref(false);
-  const defaultDomains = ref(defaultDomainList);
-
-  // Getters
-
-  return {
-    blocklist,
-    blockingEnabled,
-    defaultDomains,
-  };
-};
 
 export const useDomains = createGlobalState(() => {
   const storageKey = "domains";
 
-  const { defaultDomains, blocklist, blockingEnabled } = useDomainsState();
+  const { blocklist, blockingEnabled } = useDomainsState();
+
+  // Getters
+
+  // watchers on state
+
+  watch(blocklist, async (newBlocklist, oldBlocklist) => {
+    persistAndNotify()
+  })
+
+  watch(blockingEnabled, async (newValue, oldValue) => {
+    persistAndNotify()
+  })
+
 
   // Helpers
 
@@ -40,6 +37,7 @@ export const useDomains = createGlobalState(() => {
   }
 
   async function persistAndNotify() {
+    console.log('persist and notify!')
     await persist();
 
     await new BroadcastChannel<DomainsUpdatedMessage>(BroadcastChannels.default).postMessage({
@@ -56,7 +54,6 @@ export const useDomains = createGlobalState(() => {
     domain.domain = url;
 
     blocklist.value.push(domain);
-    persistAndNotify();
   }
 
   function remove(id: string) {
@@ -64,11 +61,9 @@ export const useDomains = createGlobalState(() => {
     if (index > -1) {
       blocklist.value.splice(index, 1);
     }
-    persistAndNotify();
   }
 
   return {
-    defaultDomains,
     blocklist,
     blockingEnabled,
     add,
