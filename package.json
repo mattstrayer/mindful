@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "1.8.0",
-    "@tailwindcss/typography": "0.5.10",
+    "@tailwindcss/typography": "0.5.12",
     "@types/node": "20.11.26",
     "@vitejs/plugin-vue": "5.0.4",
     "@vue/eslint-config-prettier": "9.0.0",
