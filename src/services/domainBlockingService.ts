@@ -1,18 +1,20 @@
-import { blockedDomains } from "../data/defaults";
+import { useDomains } from "@/stores/worker/domainsStore";
 
-export default class DomainBlockingService {
-  static blockedDomains = blockedDomains; // This will load from the DomainsRepository when it gets created
+const store = useDomains();
 
-  static shouldBlockDomain(domain: string): boolean {
-    const parsedDomain = this.parseDomain(domain);
-
-    return this.blockedDomains.some((blockedDomain) => {
-      return parsedDomain.includes(blockedDomain);
-    });
-  }
-
-  private static parseDomain(domain: string): string {
-    const url = new URL(domain);
-    return url.host;
-  }
+function parseDomain(domain: string): string {
+	const url = new URL(domain);
+	return url.host;
 }
+
+function shouldBlockDomain(domain: string): boolean {
+	const parsedDomain = parseDomain(domain);
+
+	return store.blocklist.value.some((blockedDomain) => {
+		return parsedDomain.includes(blockedDomain.domain);
+	});
+}
+
+export default {
+	shouldBlockDomain,
+};

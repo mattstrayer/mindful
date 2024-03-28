@@ -1,22 +1,21 @@
 // Not needed because of the Models static methods to init from Objects
 
-export default class JsonParserService {
-  // Takes a json object and keys to transform from strings to Dates
+// function transformDates(items: Array<Date | string>, dateKeys: Array<string>) {
+// 	return items.map((item) => {
+// 		for (const key in Object.keys(item)) {
+// 			if (dateKeys.includes(key)) {
+// 				item[key] = stringToDate(item[key]);
+// 			}
+// 		}
 
-  // TODO: test performance
-  public static transformDates(items: Array<any>, dateKeys: Array<string>) {
-    return items.map((item) => {
-      Object.keys(item).forEach((key) => {
-        if (dateKeys.includes(key)) {
-          item[key] = this.stringToDate(item[key]);
-        }
-      });
+// 		return item;
+// 	});
+// }
 
-      return item;
-    });
-  }
+// function stringToDate(value: string): Date {
+// 	return new Date(value);
+// }
 
-  private static stringToDate(value: string): Date {
-    return new Date(value);
-  }
-}
+// export default {
+// 	transformDates,
+// };

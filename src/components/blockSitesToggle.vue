@@ -1,7 +1,7 @@
 <script setup lang="ts">
-  import { useSettings } from "@/settings";
+import { useDomains } from "@/stores/local/domainsStore";
 
-  const settingsStore = useSettings();
+const store = useDomains();
 </script>
 
 <template>
@@ -15,8 +15,8 @@
       <input
         type="checkbox"
         class="toggle toggle-primary mx-auto"
-        :checked="settingsStore.blockingEnabled"
-        @change="settingsStore.toggleBlocking()"
+        :checked="store.blockingEnabled.value"
+        @change="store.blockingEnabled.value = !store.blockingEnabled.value"
       />
     </div>
   </div>

@@ -1,5 +1,5 @@
 <script setup>
-  import "./index.css";
+import "./index.css";
 </script>
 
 <template>

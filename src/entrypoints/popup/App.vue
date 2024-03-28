@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import BlockSitesToggle from "@/components/blockSitesToggle.vue";
+import BlockSitesToggle from "@/components/blockSitesToggle.vue";
 </script>
 
 <template>

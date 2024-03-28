@@ -1,10 +1,12 @@
 <script setup lang="ts">
-  import BlockSitesToggle from "@/components/blockSitesToggle.vue";
-  import IntentionsList from "@/components/intentionsList.vue";
-  import TaskListItem from "@/components/taskListItem.vue";
-  import { useTasks } from "@/stores/tasksStore";
+import BlockSitesToggle from "@/components/blockSitesToggle.vue";
+import IntentionsList from "@/components/intentionsList.vue";
+import TaskListItem from "@/components/taskListItem.vue";
 
-  const tasksStore = useTasks();
+import DomainList from "@/components/domainList.vue";
+import { useTasks } from "@/stores/local/tasksStore";
+
+const tasksStore = useTasks();
 </script>
 
 <template>
@@ -21,13 +23,16 @@
     <!-- TODO: the click action on a list item here should be to reset the task to today -->
 
     <TaskListItem
-      v-for="task of tasksStore.yesterdaysIncompleteTasks"
+      v-for="task of tasksStore.yesterdaysIncompleteTasks.value"
       :key="task.id"
       :task="task"
     />
+
+    <DomainList />
 
     <BlockSitesToggle />
   </div>
 </template>
 
 <style scoped></style>
+@/stores/local/tasksStore

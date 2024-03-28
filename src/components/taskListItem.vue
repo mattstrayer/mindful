@@ -1,27 +1,27 @@
 <script setup lang="ts">
-  import { Task } from "@/data/types";
-  import { useTasks } from "@/stores/tasksStore";
+import type { Task } from "@/data/types";
+import { useTasks } from "@/stores/local/tasksStore";
 
-  import GradientBorder from "./gradientBorder.vue";
+import GradientBorder from "./gradientBorder.vue";
 
-  const tasksStore = useTasks();
+const tasksStore = useTasks();
 
-  const props = defineProps<{
-    task: Task;
-  }>();
+const props = defineProps<{
+	task: Task;
+}>();
 
-  const didChange = () => {
-    const task = tasksStore.find(props.task.id);
-    if (task.completed) {
-      task.completed = false;
-      task.completedAt = undefined;
-    } else {
-      task.completed = true;
-      task.completedAt = new Date();
-    }
+const didChange = () => {
+	const task = tasksStore.tasks[props.task.id];
+	if (task.completed) {
+		task.completed = false;
+		task.completedAt = undefined;
+	} else {
+		task.completed = true;
+		task.completedAt = new Date();
+	}
 
-    useTasks().save(task);
-  };
+	useTasks().save(task);
+};
 </script>
 
 <template>
@@ -50,3 +50,4 @@
     vertical-align: middle;
   }
 </style>
+@/stores/local/tasksStore

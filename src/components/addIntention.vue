@@ -1,18 +1,18 @@
 <script setup lang="ts">
-  import { useIntentions } from "@/stores/intentionsStore";
-  import { ref } from "vue";
+import { useIntentions } from "@/stores/local/intentionsStore";
+import { ref } from "vue";
 
-  const input = ref("");
+const input = ref("");
 
-  function didAddIntention() {
-    if (!input.value) return;
+function didAddIntention() {
+	if (!input.value) return;
 
-    const intentionsStore = useIntentions();
+	const intentionsStore = useIntentions();
 
-    intentionsStore.add(input.value);
+	intentionsStore.add(input.value);
 
-    input.value = "";
-  }
+	input.value = "";
+}
 </script>
 
 <template>

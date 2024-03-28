@@ -1,28 +1,27 @@
-import { Task } from "@/models";
+import type { Domain, DomainsState, Task } from "@/data/types";
 
 export enum BroadcastChannels {
-  default = "mindful",
+	publish = "publish",
+	consume = "consume",
 }
 
-export type MessageHandler = (message: Message) => void;
+export type MessageHandler = (message: StoreUpdateMessage) => void;
 
-export enum MessageTypes {
-  blockEnabled = "BLOCK_ENABLED",
-  savedTask = "SAVED_TASK",
+export enum Stores {
+	Domains = 0,
+	Tasks = 1,
+	Intentions = 2,
+}
+export interface StoreUpdateMessage {
+	store: Stores;
+	data: DomainsState;
+	sourceTabId?: number;
 }
 
-export interface Message {
-  type: MessageTypes;
-  data: any;
-  tabId: number;
-}
-
-export interface BlockEnabledMessage extends Message {
-  type: MessageTypes.blockEnabled;
-  data: boolean;
-}
-
-export interface SavedTaskMessage extends Message {
-  type: MessageTypes.savedTask;
-  data: Task;
+export interface DomainsUpdatedMessage {
+	store: Stores.Domains;
+	data: {
+		blocklist: Array<Domain>;
+		blockingEnabled: boolean;
+	};
 }

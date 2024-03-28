@@ -2,11 +2,16 @@ import { createApp } from "vue";
 
 import "@/index.css";
 
-import { createPinia } from "pinia";
-import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+import { BroadcastChannels, type StoreUpdateMessage } from "@/messaging/types";
+import { BroadcastChannel } from "broadcast-channel";
 
+import { messageHandler } from "@/messaging/handlers/client";
 import App from "./App.vue";
 
-const pinia = createPinia().use(piniaPluginPersistedstate);
+const channel: BroadcastChannel<StoreUpdateMessage> = new BroadcastChannel(
+	BroadcastChannels.consume,
+);
 
-createApp(App).use(pinia).mount("#app");
+channel.onmessage = messageHandler;
+
+createApp(App).mount("#app");
