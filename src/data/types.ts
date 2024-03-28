@@ -9,7 +9,6 @@ export interface Task {
 export interface Intention {
 	id: string;
 	name: string;
-	completed: boolean;
 }
 
 export interface Domain {

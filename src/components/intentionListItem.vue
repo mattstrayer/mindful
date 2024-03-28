@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Intention } from "@/data/types";
-import { useIntentions } from "@/stores/intentionsStore";
+import { useIntentions } from "@/stores/local/intentionsStore";
 import { ref } from "vue";
 
 import GradientBorder from "./gradientBorder.vue";

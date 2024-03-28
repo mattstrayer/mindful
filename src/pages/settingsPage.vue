@@ -4,7 +4,7 @@ import IntentionsList from "@/components/intentionsList.vue";
 import TaskListItem from "@/components/taskListItem.vue";
 
 import DomainList from "@/components/domainList.vue";
-import { useTasks } from "@/stores/tasksStore";
+import { useTasks } from "@/stores/local/tasksStore";
 
 const tasksStore = useTasks();
 </script>
@@ -23,7 +23,7 @@ const tasksStore = useTasks();
     <!-- TODO: the click action on a list item here should be to reset the task to today -->
 
     <TaskListItem
-      v-for="task of tasksStore.yesterdaysIncompleteTasks"
+      v-for="task of tasksStore.yesterdaysIncompleteTasks.value"
       :key="task.id"
       :task="task"
     />

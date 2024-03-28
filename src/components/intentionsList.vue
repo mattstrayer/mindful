@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useIntentions } from "@/stores/intentionsStore";
+import { useIntentions } from "@/stores/local/intentionsStore";
 
 import AddIntention from "./addIntention.vue";
 import IntentionListItem from "./intentionListItem.vue";
@@ -15,7 +15,7 @@ const intentionsStore = useIntentions();
       <div class="collapse-content">
         <AddIntention class="mb-4" />
         <IntentionListItem
-          v-for="(intention, index) in intentionsStore.intentions"
+          v-for="(intention, index) in intentionsStore.state.intentions"
           :key="index"
           :intention="intention"
         />
@@ -23,4 +23,3 @@ const intentionsStore = useIntentions();
     </div>
   </div>
 </template>
-@/stores/local/intentionsStore

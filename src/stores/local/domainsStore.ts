@@ -46,7 +46,7 @@ export const useDomains = () => {
 		).postMessage({
 			store: Stores.Domains,
 			data: {
-				blocklist: toRaw(blocklist.value),
+				blocklist: toRaw(blocklist),
 				blockingEnabled: toRaw(blockingEnabled.value),
 			},
 			sourceTabId,
@@ -60,13 +60,13 @@ export const useDomains = () => {
 		domain.id = generateUid();
 		domain.domain = url;
 
-		blocklist.value.push(domain);
+		blocklist.push(domain);
 	}
 
 	function remove(id: string) {
-		const index = blocklist.value.findIndex((domain) => domain.id === id);
+		const index = blocklist.findIndex((domain) => domain.id === id);
 		if (index > -1) {
-			blocklist.value.splice(index, 1);
+			blocklist.splice(index, 1);
 		}
 	}
 

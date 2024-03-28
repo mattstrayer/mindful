@@ -23,15 +23,15 @@ const showSettings = ref(false);
 const displayIntention = computed(() => {
 	const mindful = { name: "mindful" } as Intention;
 
-	if (!intentionsStore.intentions.value.length) {
+	if (!intentionsStore.state.intentions.length) {
 		return mindful;
 	}
 
-	return intentionsStore.intentions.value[currentIntention.value];
+	return intentionsStore.state.intentions[currentIntention.value];
 });
 
 function fetchNewIntention() {
-	if (currentIntention.value >= intentionsStore.intentions.value.length - 1) {
+	if (currentIntention.value >= intentionsStore.state.intentions.length - 1) {
 		currentIntention.value = 0;
 	} else {
 		currentIntention.value++;
@@ -40,7 +40,7 @@ function fetchNewIntention() {
 
 onMounted(async () => {
 	const domainsStore = useDomains();
-	if (!domainsStore.blocklist.value.length) {
+	if (!domainsStore.blocklist.length) {
 		domainsStore.hydrateWithDefaultBlocklist();
 	}
 
@@ -77,7 +77,7 @@ onMounted(async () => {
 
           <TransitionGroup name="list" tag="div">
             <TaskListItem
-              v-for="task of tasksStore.todaysTasks"
+              v-for="task of tasksStore.todaysTasks.value"
               :key="task.id"
               :task="task"
               class="flex-1"

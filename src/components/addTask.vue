@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTasks } from "@/stores/tasksStore";
+import { useTasks } from "@/stores/local/tasksStore";
 import { ref } from "vue";
 
 const input = ref("");

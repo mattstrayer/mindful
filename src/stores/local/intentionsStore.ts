@@ -1,33 +1,34 @@
 import type { Intention } from "@/data/types";
 import { generateUid } from "@/helpers";
-import { useIntentionsState } from "../states";
+import { intentionsState as state } from "../states";
 
 // All interactions with the settings will be done via actions, so that we can dispatch
 // a broadcast-channel message to the worker
 
 export const useIntentions = () => {
-	const { intentions } = useIntentionsState();
-
 	function add(name: string) {
 		const intention = {} as Intention;
 		intention.id = generateUid();
 		intention.name = name;
 
-		intentions.value.push(intention);
+		state.intentions.push(intention);
 	}
 
 	function remove(id: string) {
-		const index = intentions.value.findIndex(
+		const index = state.intentions.findIndex(
 			(intention) => intention.id === id,
 		);
 		if (index > -1) {
-			intentions.value.splice(index, 1);
+			state.intentions.splice(index, 1);
 		}
-
-		return { intentions };
+		return {
+			intentions: state.intentions,
+		};
 	}
 
 	return {
-		intentions,
+		state,
+		add,
+		remove,
 	};
 };

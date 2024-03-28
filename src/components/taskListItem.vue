@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Task } from "@/data/types";
-import { useTasks } from "@/stores/tasksStore";
+import { useTasks } from "@/stores/local/tasksStore";
 
 import GradientBorder from "./gradientBorder.vue";
 
@@ -11,7 +11,7 @@ const props = defineProps<{
 }>();
 
 const didChange = () => {
-	const task = tasksStore.find(props.task.id);
+	const task = tasksStore.tasks[props.task.id];
 	if (task.completed) {
 		task.completed = false;
 		task.completedAt = undefined;

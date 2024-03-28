@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useIntentions } from "@/stores/intentionsStore";
+import { useIntentions } from "@/stores/local/intentionsStore";
 import { ref } from "vue";
 
 const input = ref("");
@@ -27,4 +27,3 @@ function didAddIntention() {
     <button class="btn btn-primary join-item" @click="didAddIntention">add</button>
   </div>
 </template>
-@/stores/local/intentionsStore
