@@ -23,3 +23,10 @@ export type DomainsState = {
 	blocklist: Array<Domain>;
 	blockingEnabled: boolean;
 };
+
+export type IntentionsState = {
+	intentions: Array<Intention>;
+};
+export type TasksState = {
+	tasks: Array<Task>;
+};

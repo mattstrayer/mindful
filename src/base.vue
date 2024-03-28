@@ -10,8 +10,8 @@ import TaskListItem from "./components/taskListItem.vue";
 import TasksContainer from "./components/tasksContainer.vue";
 import type { Intention } from "./data/types";
 import SettingsPage from "./pages/settingsPage.vue";
-import { useIntentions } from "./stores/intentionsStore";
-import { useTasks } from "./stores/tasksStore";
+import { useIntentions } from "./stores/local/intentionsStore";
+import { useTasks } from "./stores/local/tasksStore";
 
 const tasksStore = useTasks();
 const intentionsStore = useIntentions();
@@ -23,15 +23,15 @@ const showSettings = ref(false);
 const displayIntention = computed(() => {
 	const mindful = { name: "mindful" } as Intention;
 
-	if (!intentionsStore.intentions.length) {
+	if (!intentionsStore.intentions.value.length) {
 		return mindful;
 	}
 
-	return intentionsStore.intentions[currentIntention.value];
+	return intentionsStore.intentions.value[currentIntention.value];
 });
 
 function fetchNewIntention() {
-	if (currentIntention.value >= intentionsStore.intentions.length - 1) {
+	if (currentIntention.value >= intentionsStore.intentions.value.length - 1) {
 		currentIntention.value = 0;
 	} else {
 		currentIntention.value++;

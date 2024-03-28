@@ -1,6 +1,6 @@
 import type { Domain, Intention, Task } from "@/data/types";
-import { ref } from "vue";
 import { differenceInDays, subDays } from "date-fns";
+import { ref } from "vue";
 
 // watch works directly on a ref
 

@@ -26,4 +26,8 @@ export const useIntentions = () => {
 
 		return { intentions };
 	}
+
+	return {
+		intentions,
+	};
 };

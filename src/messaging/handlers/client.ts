@@ -6,7 +6,7 @@ export const messageHandler = async (message: StoreUpdateMessage) => {
 	// if so, discard it.
 	const tabInfoStore = await useTabInfoStore();
 
-	if (tabInfoStore.tab?.id === message.data.sourceTabId) {
+	if (tabInfoStore.tab.value?.id === message.data.sourceTabId) {
 		console.log("message came from this tab, no-op");
 		return;
 	}

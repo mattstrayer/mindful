@@ -42,17 +42,8 @@
 		"wxt": "0.17.9"
 	},
 	"manifest": {
-		"permissions": [
-			"tabs",
-			"storage",
-			"webRequest",
-			"webNavigation"
-		],
-		"host_permissions": [
-			"http://*/*",
-			"https://*/*",
-			"activeTab"
-		]
+		"permissions": ["tabs", "storage", "webRequest", "webNavigation"],
+		"host_permissions": ["http://*/*", "https://*/*", "activeTab"]
 	},
 	"volta": {
 		"node": "20.11.1",
