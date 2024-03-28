@@ -1,12 +1,12 @@
 <script setup lang="ts">
-  import BlockSitesToggle from "@/components/blockSitesToggle.vue";
-  import IntentionsList from "@/components/intentionsList.vue";
-  import TaskListItem from "@/components/taskListItem.vue";
+import BlockSitesToggle from "@/components/blockSitesToggle.vue";
+import IntentionsList from "@/components/intentionsList.vue";
+import TaskListItem from "@/components/taskListItem.vue";
 
-  import DomainList from "@/components/domainList.vue";
-  import { useTasks } from "@/stores/tasksStore";
+import DomainList from "@/components/domainList.vue";
+import { useTasks } from "@/stores/tasksStore";
 
-  const tasksStore = useTasks();
+const tasksStore = useTasks();
 </script>
 
 <template>

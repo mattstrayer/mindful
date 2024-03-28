@@ -1,54 +1,54 @@
 <script setup lang="ts">
-  import "./index.css";
+import "./index.css";
 
-  import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
-  import AddTask from "./components/addTask.vue";
-  import BreathingAnimation from "./components/breathingAnimation.vue";
-  import TaskListItem from "./components/taskListItem.vue";
-  import TasksContainer from "./components/tasksContainer.vue";
-  import { Intention } from "./data/types";
-  import SettingsPage from "./pages/settingsPage.vue";
-  import { useIntentions } from "./stores/intentionsStore";
-  import { useTasks } from "./stores/tasksStore";
-  import { useDomains } from "@/stores/local/domainsStore";
+import { useDomains } from "@/stores/local/domainsStore";
+import AddTask from "./components/addTask.vue";
+import BreathingAnimation from "./components/breathingAnimation.vue";
+import TaskListItem from "./components/taskListItem.vue";
+import TasksContainer from "./components/tasksContainer.vue";
+import type { Intention } from "./data/types";
+import SettingsPage from "./pages/settingsPage.vue";
+import { useIntentions } from "./stores/intentionsStore";
+import { useTasks } from "./stores/tasksStore";
 
-  const tasksStore = useTasks();
-  const intentionsStore = useIntentions();
+const tasksStore = useTasks();
+const intentionsStore = useIntentions();
 
-  const currentIntention = ref(0);
+const currentIntention = ref(0);
 
-  const showSettings = ref(false);
+const showSettings = ref(false);
 
-  const displayIntention = computed(() => {
-    const mindful = { name: "mindful" } as Intention;
+const displayIntention = computed(() => {
+	const mindful = { name: "mindful" } as Intention;
 
-    if (!intentionsStore.intentions.length) {
-      return mindful;
-    }
+	if (!intentionsStore.intentions.length) {
+		return mindful;
+	}
 
-    return intentionsStore.intentions[currentIntention.value];
-  });
+	return intentionsStore.intentions[currentIntention.value];
+});
 
-  function fetchNewIntention() {
-    if (currentIntention.value >= intentionsStore.intentions.length - 1) {
-      currentIntention.value = 0;
-    } else {
-      currentIntention.value++;
-    }
-  }
+function fetchNewIntention() {
+	if (currentIntention.value >= intentionsStore.intentions.length - 1) {
+		currentIntention.value = 0;
+	} else {
+		currentIntention.value++;
+	}
+}
 
-  onMounted(async () => {
-    const domainsStore = useDomains();
-    if (!domainsStore.blocklist.value.length) {
-      domainsStore.hydrateWithDefaultBlocklist();
-    }
+onMounted(async () => {
+	const domainsStore = useDomains();
+	if (!domainsStore.blocklist.value.length) {
+		domainsStore.hydrateWithDefaultBlocklist();
+	}
 
-    fetchNewIntention();
+	fetchNewIntention();
 
-    // cleanup on startup
-    // tasksStore.cleanupOldTasks();
-  });
+	// cleanup on startup
+	// tasksStore.cleanupOldTasks();
+});
 </script>
 
 <template>

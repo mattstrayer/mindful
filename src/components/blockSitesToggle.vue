@@ -1,7 +1,7 @@
 <script setup lang="ts">
-  import { useDomains } from "@/stores/local/domainsStore";
+import { useDomains } from "@/stores/local/domainsStore";
 
-  const store = useDomains();
+const store = useDomains();
 </script>
 
 <template>

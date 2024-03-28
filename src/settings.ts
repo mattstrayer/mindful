@@ -1,14 +1,15 @@
 import { BroadcastChannel } from "broadcast-channel";
 
-import { BlockEnabledMessage, BroadcastChannels, MessageTypes } from "./messaging/types";
+import {
+	BlockEnabledMessage,
+	BroadcastChannels,
+	MessageTypes,
+} from "./messaging/types";
 
 // All interactions with the settings will be done via actions, so that we can dispatch
 // a broadcast-channel message to the worker
 
 // export const useSettings = defineStore("settings", {
-
-
-
 
 //   persist: true,
 //   state: () => {

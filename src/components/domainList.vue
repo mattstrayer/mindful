@@ -1,10 +1,10 @@
 <script setup lang="ts">
-  import { useDomains } from "@/stores/local/domainsStore";
+import { useDomains } from "@/stores/local/domainsStore";
 
-  import AddIntention from "./addIntention.vue";
-  import IntentionListItem from "./intentionListItem.vue";
+import AddIntention from "./addIntention.vue";
+import IntentionListItem from "./intentionListItem.vue";
 
-  const store = useDomains();
+const store = useDomains();
 </script>
 
 <template>

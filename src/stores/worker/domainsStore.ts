@@ -1,72 +1,80 @@
-import { createGlobalState } from "@vueuse/core";
 import type { Domain } from "@/data/types";
 import { generateUid } from "@/helpers";
-import { BroadcastChannels, DomainsUpdatedMessage, Stores } from "@/messaging/types";
+import {
+	BroadcastChannels,
+	type DomainsUpdatedMessage,
+	Stores,
+} from "@/messaging/types";
 import { BroadcastChannel } from "broadcast-channel";
 import { useDomainsState } from "../states";
 
+export const useDomains = () => {
+	const storageKey = "domains";
 
+	const { blocklist, blockingEnabled } = useDomainsState();
 
-export const useDomains = createGlobalState(() => {
-  const storageKey = "domains";
+	// Getters
 
-  const { blocklist, blockingEnabled } = useDomainsState();
+	// watchers on state
 
-  // Getters
+	// watch(blocklist, async (newBlocklist, oldBlocklist) => {
+	//   persistAndNotify()
+	// })
 
-  // watchers on state
+	// watch(blockingEnabled, async (newValue, oldValue) => {
+	//   persistAndNotify()
+	// })
 
-  watch(blocklist, async (newBlocklist, oldBlocklist) => {
-    persistAndNotify()
-  })
+	// Helpers
 
-  watch(blockingEnabled, async (newValue, oldValue) => {
-    persistAndNotify()
-  })
+	function persist() {
+		browser.storage.local.set({
+			[storageKey]: {
+				blockingEnabled: blockingEnabled.value,
+				blocklist: blocklist.value,
+			},
+		});
+	}
 
+	async function persistAndNotify() {
+		console.log("persist and notify!");
+		await persist();
 
-  // Helpers
+		await new BroadcastChannel<DomainsUpdatedMessage>(
+			BroadcastChannels.consume,
+		).postMessage({
+			store: Stores.Domains,
+			data: {
+				blocklist: toRaw(blocklist.value),
+				blockingEnabled: toRaw(blockingEnabled.value),
+			},
+		});
+	}
 
-  function persist() {
-    browser.storage.local.set({
-      [storageKey]: {
-        blockingEnabled: blockingEnabled.value,
-        blocklist: blocklist.value,
-      },
-    });
-  }
+	// Actions
 
-  async function persistAndNotify() {
-    console.log('persist and notify!')
-    await persist();
+	async function add(url: string) {
+		const domain = {} as Domain;
+		domain.id = generateUid();
+		domain.domain = url;
 
-    await new BroadcastChannel<DomainsUpdatedMessage>(BroadcastChannels.default).postMessage({
-      store: Stores.Domains,
-      data: { blocklist: toRaw(blocklist.value), blockingEnabled: toRaw(blockingEnabled.value) },
-    });
-  }
+		blocklist.value.push(domain);
+		persistAndNotify();
+	}
 
-  // Actions
+	function remove(id: string) {
+		const index = blocklist.value.findIndex((domain) => domain.id === id);
+		if (index > -1) {
+			blocklist.value.splice(index, 1);
+		}
+		persistAndNotify();
+	}
 
-  async function add(url: string) {
-    const domain = {} as Domain;
-    domain.id = generateUid();
-    domain.domain = url;
-
-    blocklist.value.push(domain);
-  }
-
-  function remove(id: string) {
-    const index = blocklist.value.findIndex((domain) => domain.id === id);
-    if (index > -1) {
-      blocklist.value.splice(index, 1);
-    }
-  }
-
-  return {
-    blocklist,
-    blockingEnabled,
-    add,
-    remove,
-  };
-});
+	return {
+		blocklist,
+		blockingEnabled,
+		add,
+		remove,
+		persistAndNotify,
+	};
+};

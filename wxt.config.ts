@@ -3,21 +3,21 @@ import { defineConfig } from "wxt";
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
-  srcDir: "src",
+	srcDir: "src",
 
-  manifest: {
-    name: "mindful",
-    description: "mindful app",
-    permissions: ["tabs", "storage", "webRequest", "webNavigation"],
-  },
+	manifest: {
+		name: "mindful",
+		description: "mindful app",
+		permissions: ["tabs", "storage", "webRequest", "webNavigation"],
+	},
 
-  imports: {
-    addons: {
-      vueTemplate: true,
-    },
-    presets: ["vue"],
-  },
-  vite: () => ({
-    plugins: [vue()],
-  }),
+	imports: {
+		addons: {
+			vueTemplate: true,
+		},
+		presets: ["vue"],
+	},
+	vite: () => ({
+		plugins: [vue()],
+	}),
 });

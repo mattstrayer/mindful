@@ -2,33 +2,18 @@ import { createApp } from "vue";
 
 import "@/index.css";
 
-import { useTabInfoStore } from "@/data/tabInfoStore";
-import { BroadcastChannels, Message, MessageTypes } from "@/messaging/types";
+import { messageHandler } from "@/messaging/handlers/client";
+import { BroadcastChannels, type StoreUpdateMessage } from "@/messaging/types";
 import { BroadcastChannel } from "broadcast-channel";
-
+import { createPinia } from "pinia";
 import App from "./App.vue";
 
+const pinia = createPinia();
 
-const channel: BroadcastChannel<Message> = new BroadcastChannel(BroadcastChannels.default);
+const channel: BroadcastChannel<StoreUpdateMessage> = new BroadcastChannel(
+	BroadcastChannels.consume,
+);
 
-channel.onmessage = async (message) => {
-  // preflight check to see if the message came from the current tab.
-  // if so, discard it.
-  const tabInfoStore = await useTabInfoStore();
+channel.onmessage = messageHandler;
 
-  if (tabInfoStore.tab?.id === message.tabId) {
-    console.log("message came from this tab, no-op");
-    return;
-  }
-
-  switch (message.type) {
-    case MessageTypes.domainsUpdated: {
-      // only want to run this without posting a new message.
-      // await useRepo(TaskRepository).save(message.data)
-      break;
-    }
-  }
-  console.log(message.type, message.data);
-};
-
-createApp(App).mount("#app");
+createApp(App).use(pinia).mount("#app");

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-  import { useIntentions } from "@/stores/intentionsStore";
+import { useIntentions } from "@/stores/intentionsStore";
 
-  import AddIntention from "./addIntention.vue";
-  import IntentionListItem from "./intentionListItem.vue";
+import AddIntention from "./addIntention.vue";
+import IntentionListItem from "./intentionListItem.vue";
 
-  const intentionsStore = useIntentions();
+const intentionsStore = useIntentions();
 </script>
 
 <template>

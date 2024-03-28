@@ -1,26 +1,26 @@
 <script setup lang="ts">
-  import { Intention } from "@/data/types";
-  import { useIntentions } from "@/stores/intentionsStore";
-  import { ref } from "vue";
+import type { Intention } from "@/data/types";
+import { useIntentions } from "@/stores/intentionsStore";
+import { ref } from "vue";
 
-  import GradientBorder from "./gradientBorder.vue";
+import GradientBorder from "./gradientBorder.vue";
 
-  const props = defineProps<{
-    intention: Intention;
-  }>();
+const props = defineProps<{
+	intention: Intention;
+}>();
 
-  const showConfirmation = ref(false);
+const showConfirmation = ref(false);
 
-  function didRemove() {
-    if (showConfirmation.value === true) {
-      const intentionsStore = useIntentions();
-      intentionsStore.remove(props.intention?.id);
+function didRemove() {
+	if (showConfirmation.value === true) {
+		const intentionsStore = useIntentions();
+		intentionsStore.remove(props.intention?.id);
 
-      showConfirmation.value = false;
-    } else {
-      showConfirmation.value = true;
-    }
-  }
+		showConfirmation.value = false;
+	} else {
+		showConfirmation.value = true;
+	}
+}
 </script>
 
 <template>

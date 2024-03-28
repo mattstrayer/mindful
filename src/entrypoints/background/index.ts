@@ -1,4 +1,8 @@
-import { BroadcastChannels, Message, MessageTypes, StoreUpdateMessage, Stores } from "@/messaging/types";
+import {
+	BroadcastChannels,
+	type StoreUpdateMessage,
+	Stores,
+} from "@/messaging/types";
 import { BroadcastChannel } from "broadcast-channel";
 
 import TabObserverService from "@/services/tabObserverService";
@@ -6,41 +10,36 @@ import TabObserverService from "@/services/tabObserverService";
 import { useDomains } from "@/stores/worker/domainsStore";
 
 export default defineBackground(async () => {
-  const domainsStore = useDomains();
-  console.log(domainsStore.blockingEnabled.value);
+	const domainsStore = useDomains();
 
-  domainsStore.add("example.com");
+	// Register Browser Event Listeners
+	browser.tabs.onUpdated.addListener(TabObserverService.updateTabHandler);
 
-  const b = await browser.storage.local.get("domains");
-  console.log(b);
+	// Setup Broadcast Channel to listen for messages on the publish channel
+	// These are messages that the new-tab and popup clients will send
+	const channel: BroadcastChannel<StoreUpdateMessage> = new BroadcastChannel(
+		BroadcastChannels.publish,
+	);
 
-  // Register Browser Event Listeners
-  browser.tabs.onUpdated.addListener(TabObserverService.updateTabHandler);
+	channel.onmessage = (message: StoreUpdateMessage) => {
+		// no special logic to look at the tabId needed here. The bg worker will always respond to messages
 
-  // Setup Broadcast Channel to listen for messages on the publish channel
-  // These are messages that the new-tab and popup clients will send
-  const channel: BroadcastChannel<StoreUpdateMessage> = new BroadcastChannel(BroadcastChannels.publish);
+		switch (message.store) {
+			case Stores.Domains:
+				domainsStore.blockingEnabled.value = message.data.blockingEnabled;
 
-  channel.onmessage = (message) => {
-    // no special logic to look at the tabId needed here. The bg worker will always respond to messages
+				domainsStore.blocklist.value = message.data.blocklist;
 
-    switch(message.store) {
-      case Stores.Domains:
-        if(message.data.blockingEnabled) {
-          domainsStore.blockingEnabled.value = message.data.blockingEnabled;
-        }
+				domainsStore.persistAndNotify();
 
-        domainsStore.blocklist = message.data.blocklist
+				// if (domainsStore.blockingEnabled.value) {
+				//   TabObserverService.findAndBlockTabs();
+				// } else {
+				//   TabObserverService.restoreAllTabs();
+				// }
+				break;
+		}
 
-        if (domainsStore.blockingEnabled.value) {
-          TabObserverService.findAndBlockTabs();
-        } else {
-          TabObserverService.restoreAllTabs();
-        }
-        break;
-
-    }
-
-    console.log(message.store, message.data);
-  };
+		console.log(message.store, message.data);
+	};
 });

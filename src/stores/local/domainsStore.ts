@@ -1,73 +1,80 @@
-import { createGlobalState } from "@vueuse/core";
 import type { Domain } from "@/data/types";
 import { generateUid } from "@/helpers";
-import { BroadcastChannels, StoreUpdateMessage, Stores } from "@/messaging/types";
+import {
+	BroadcastChannels,
+	type StoreUpdateMessage,
+	Stores,
+} from "@/messaging/types";
 import { BroadcastChannel } from "broadcast-channel";
 import { useDomainsState } from "../states";
 
 import { defaultDomainList } from "@/data/defaults";
 
+export const useDomains = () => {
+	const { blocklist, blockingEnabled } = useDomainsState();
 
-export const useDomains = createGlobalState(() => {
+	// Getters
 
-  const { blocklist, blockingEnabled } = useDomainsState();
+	// watchers on state
 
-  // Getters
+	watch(blocklist, async (newBlocklist, oldBlocklist) => {
+		publishChanges();
+	});
 
-  // watchers on state
+	watch(blockingEnabled, async (newValue, oldValue) => {
+		publishChanges();
+	});
 
-  watch(blocklist, async (newBlocklist, oldBlocklist) => {
-    publishChanges()
-  })
+	function hydrateWithDefaultBlocklist() {
+		for (const domain of defaultDomainList) {
+			add(domain);
+		}
 
-  watch(blockingEnabled, async (newValue, oldValue) => {
-    publishChanges()
-  })
+		publishChanges();
+	}
 
+	// Helpers
 
-  function hydrateWithDefaultBlocklist() {
-    defaultDomainList.forEach((domain) =>add(domain))
+	async function publishChanges() {
+		console.log("publishing to broadcast channel");
 
-    publishChanges()
-  }
+		const sourceTab = await browser.tabs.getCurrent();
+		const sourceTabId = sourceTab?.id;
 
-  // Helpers
+		await new BroadcastChannel<StoreUpdateMessage>(
+			BroadcastChannels.publish,
+		).postMessage({
+			store: Stores.Domains,
+			data: {
+				blocklist: toRaw(blocklist.value),
+				blockingEnabled: toRaw(blockingEnabled.value),
+			},
+			sourceTabId,
+		});
+	}
 
-  async function publishChanges() {
-    console.log('publishing to broadcast channel')
+	// Actions
 
-    const sourceTab = await browser.tabs.getCurrent();
-    const sourceTabId = sourceTab?.id;
+	function add(url: string) {
+		const domain = {} as Domain;
+		domain.id = generateUid();
+		domain.domain = url;
 
-    await new BroadcastChannel<StoreUpdateMessage>(BroadcastChannels.publish).postMessage({
-      store: Stores.Domains,
-      data: { blocklist: toRaw(blocklist.value), blockingEnabled: toRaw(blockingEnabled.value) },
-      sourceTabId
-    });
-  }
+		blocklist.value.push(domain);
+	}
 
-  // Actions
+	function remove(id: string) {
+		const index = blocklist.value.findIndex((domain) => domain.id === id);
+		if (index > -1) {
+			blocklist.value.splice(index, 1);
+		}
+	}
 
-  async function add(url: string) {
-    const domain = {} as Domain;
-    domain.id = generateUid();
-    domain.domain = url;
-
-    blocklist.value.push(domain);
-  }
-
-  function remove(id: string) {
-    const index = blocklist.value.findIndex((domain) => domain.id === id);
-    if (index > -1) {
-      blocklist.value.splice(index, 1);
-    }
-  }
-
-  return {
-    blocklist,
-    blockingEnabled,
-    add,
-    remove,
-    hydrateWithDefaultBlocklist
-  };
-});
+	return {
+		blocklist,
+		blockingEnabled,
+		add,
+		remove,
+		hydrateWithDefaultBlocklist,
+	};
+};
