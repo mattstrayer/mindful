@@ -35,3 +35,4 @@ const tasksStore = useTasks();
 </template>
 
 <style scoped></style>
+@/stores/local/tasksStore

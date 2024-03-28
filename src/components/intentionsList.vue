@@ -23,3 +23,4 @@ const intentionsStore = useIntentions();
     </div>
   </div>
 </template>
+@/stores/local/intentionsStore

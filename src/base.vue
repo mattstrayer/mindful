@@ -118,3 +118,5 @@ onMounted(async () => {
   }
 </style>
 ./stores/tasksStore
+./stores/local/tasksStore
+./stores/local/intentionsStore

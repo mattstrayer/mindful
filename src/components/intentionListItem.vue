@@ -57,3 +57,4 @@ function didRemove() {
     <GradientBorder class="flex flex-row" />
   </div>
 </template>
+@/stores/local/intentionsStore

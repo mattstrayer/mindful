@@ -26,3 +26,4 @@ function didAddTask() {
     <button class="btn btn-primary join-item" @click="didAddTask">add</button>
   </div>
 </template>
+@/stores/local/tasksStore

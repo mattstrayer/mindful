@@ -27,3 +27,4 @@ function didAddIntention() {
     <button class="btn btn-primary join-item" @click="didAddIntention">add</button>
   </div>
 </template>
+@/stores/local/intentionsStore

@@ -1,6 +1,6 @@
 import type { Intention } from "@/data/types";
 import { generateUid } from "@/helpers";
-import { useIntentionsState } from "./states";
+import { useIntentionsState } from "../states";
 
 // All interactions with the settings will be done via actions, so that we can dispatch
 // a broadcast-channel message to the worker

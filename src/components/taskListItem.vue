@@ -50,3 +50,4 @@ const didChange = () => {
     vertical-align: middle;
   }
 </style>
+@/stores/local/tasksStore
