@@ -22,7 +22,6 @@
 		"broadcast-channel": "7.0.0",
 		"date-fns": "3.6.0",
 		"npm": "10.5.0",
-		"pinia": "^2.1.7",
 		"uuid": "9.0.1",
 		"vue": "3.4.21"
 	},
@@ -43,8 +42,17 @@
 		"wxt": "0.17.9"
 	},
 	"manifest": {
-		"permissions": ["tabs", "storage", "webRequest", "webNavigation"],
-		"host_permissions": ["http://*/*", "https://*/*", "activeTab"]
+		"permissions": [
+			"tabs",
+			"storage",
+			"webRequest",
+			"webNavigation"
+		],
+		"host_permissions": [
+			"http://*/*",
+			"https://*/*",
+			"activeTab"
+		]
 	},
 	"volta": {
 		"node": "20.11.1",

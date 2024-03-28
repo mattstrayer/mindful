@@ -1,57 +1,29 @@
-// import { useTabInfoStore } from "@/data/tabInfoStore"
 import type { Intention } from "@/data/types";
 import { generateUid } from "@/helpers";
-// import { SavedTaskMessage } from "@/messaging/types"
-// import { BroadcastChannel } from "broadcast-channel"
-import { defineStore } from "pinia";
-
-// import { BroadcastChannels, MessageTypes } from "@/messaging/types"
+import { useIntentionsState } from "./states";
 
 // All interactions with the settings will be done via actions, so that we can dispatch
 // a broadcast-channel message to the worker
 
-export const useIntentions = defineStore("intentions", {
-	state: () => {
-		return {
-			intentions: [] as Array<Intention>,
-		};
-	},
+export const useIntentions = () => {
+	const { intentions } = useIntentionsState();
 
-	getters: {},
-	actions: {
-		add(name: string) {
-			// const tabInfo = await useTabInfoStore()
+	function add(name: string) {
+		const intention = {} as Intention;
+		intention.id = generateUid();
+		intention.name = name;
 
-			const intention = {} as Intention;
-			intention.id = generateUid();
-			intention.name = name;
+		intentions.value.push(intention);
+	}
 
-			this.intentions.push(intention);
+	function remove(id: string) {
+		const index = intentions.value.findIndex(
+			(intention) => intention.id === id,
+		);
+		if (index > -1) {
+			intentions.value.splice(index, 1);
+		}
 
-			// new BroadcastChannel<SavedTaskMessage>(
-			//   BroadcastChannels.default
-			// ).postMessage({
-			//   tabId: tabInfo.tab?.id as number,
-			//   type: MessageTypes.savedTask,
-			//   data: task
-			// })
-		},
-
-		remove(id: string) {
-			const index = this.intentions.findIndex(
-				(intention) => intention.id === id,
-			);
-			if (index > -1) {
-				this.intentions.splice(index, 1);
-			}
-
-			// new BroadcastChannel<SavedTaskMessage>(
-			//   BroadcastChannels.default
-			// ).postMessage({
-			//   tabId: tabInfo.tab?.id as number,
-			//   type: MessageTypes.savedTask,
-			//   data: task
-			// })
-		},
-	},
-});
+		return { intentions };
+	}
+};
